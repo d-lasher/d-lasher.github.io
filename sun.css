@@ -1,0 +1,51 @@
+
+#sun_box {
+    position: relative;
+    float:left;
+    border-radius: 25px;
+    background-color: rgb(53, 114, 172);
+    margin-top:0px;
+    margin-bottom:10px;
+    margin-left:20px;
+    margin-right:10px;
+    width: 440px;
+    height: 440px; 
+    color: rgb(236, 243, 243);
+    font-size: 28px;
+    font-weight: 600;  
+    text-align: left;     
+}
+
+#sun_value {
+    position: absolute;
+    top:0%;
+    left:10%;
+    color: rgb(236, 243, 243);
+    font-size: 60px;
+    font-weight: 600;
+    text-align: left;
+ 
+}
+#sun_next {
+    position: absolute;
+    bottom:10px;
+    left:10%;
+    width:80%;
+    height:60px;   
+}
+#sun_next_value {
+    float:right;
+    text-align:right;
+}
+
+#sun_uv {
+    position: absolute;
+    bottom:50px;
+    left:10%;
+    width:80%;
+    height:60px;
+}
+#solarradiation {
+    float:right;
+    text-align:right;
+}

@@ -1,0 +1,52 @@
+
+
+
+#precip_box {
+    position: relative;
+    float:left;
+    border-radius: 25px;
+    background-color: rgb(53, 114, 172);
+    margin-top:0px;
+    margin-bottom:10px;    
+    margin-left:10px;
+    margin-right:0px;
+    width: 440px;
+    height: 440px;
+  }
+  
+  
+  #precip_day_label {
+    position: absolute;
+    top:30px;
+    left:30px;
+    width:80%;
+    height:60px;
+    color: rgb(236, 243, 243);
+    font-size: 32px; 
+    font-weight: 600;
+    text-align: left;
+  }
+
+  #precip_value {
+    position: absolute;
+    top:80px;
+    left:30px;
+    width:60%;
+    height:60px;
+    color: rgb(236, 243, 243);
+    font-size: 60px;
+    font-weight: 600;
+    text-align: center;
+  }
+  
+#precip_next {
+    position: absolute;
+    bottom:0px;
+    left:10%;
+    width:85%;
+    height:60px;
+    color: rgb(236, 243, 243);
+    font-size: 28px;
+    font-weight: 600;
+    text-align: left;
+}

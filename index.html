@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<!-- use 'sudo python3 -m http.server 80' to test -->
+
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="robots" content="noindex">
+        <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+        <meta http-equiv="Pragma" content="no-cache">
+        <meta http-equiv="Expires" content="0">
+        
+        <title>Mtn WX</title>
+
+        <link href='//fonts.googleapis.com/css?family=Open+Sans:400,600,700,800,300' rel='stylesheet' type='text/css'>
+        <link rel="stylesheet" href="main.css">
+        <link rel="stylesheet" href="background.css">
+
+        <link rel="stylesheet" href="hourly.css">
+        <link rel="stylesheet" href="daily.css">
+        <link rel="stylesheet" href="sun.css">
+        <link rel="stylesheet" href="now.css">
+        <link rel="stylesheet" href="wind.css">
+        <link rel="stylesheet" href="inside.css">
+        <link rel="stylesheet" href="precip.css">
+
+        <script src="aws.js"></script>
+        <script src="nws.js"></script>
+        <script src="horzdrag.js"></script>
+
+        <script src="hourly.js"></script>
+        <script src="daily.js"></script>
+        <script src="sun.js"></script>
+        <script src="now.js"></script>
+        <script src="wind.js"></script>
+        <script src="inside.js"></script>
+        <script src="precip.js"></script>
+
+        <script src="main.js"></script>
+    </head>
+    
+    <body onload="loadBodyElements()">
+    <div id="viewport" style="transform-origin: left top">
+        <h1 id='background_location'>Mountain Home</h1>
+        <h1 class='background_temp'> <span id='temp1f'></span></h1>
+        <h1 class='background_current_conditions'><span id='background_current_conditions'> </span></h1>
+                
+        <div id='hourly_box'>
+            <span class="forecast_label">Hourly Forecast</span>
+            <div id="hourly_table_parent">
+                <div id="hourly_table_child">
+                </div>    
+            </div>
+        </div>
+        <div id='now_box'>
+            <span id='now_label' class="forecast_label"></span>
+            <div id='now_conditions'></div>
+            <span id='now_next_label'></span>
+            <div id='now_next_conditions'></div>
+        </div>
+
+        <div id='daily_box'>
+            <span class="forecast_label">Daily Forecast</span>
+            <div id="daily_table_parent">
+                <div id="daily_table_child">
+                </div>    
+            </div>
+        </div>
+
+        <div id='wind_box'>
+            <span class="conditions_label">Wind</span>
+            <span class="windspd_compass">
+                <span class="windspd_N">N</span>
+                <span class="windspd_E">E</span>
+                <span class="windspd_S">S</span>
+                <span class="windspd_W">W</span>
+                <div id="winddir"> 
+                    <span class="winddir_head">></span>
+                    <span class="winddir_tail">>>></span>
+                </div>
+                <div class="winddir_mask"></div>
+            </span>
+            <p id="windspd"><span id="windspeedmph">0</span><br/><span id="windspd_units">MPH</span></p>
+            
+            <p id="gusts"><span id="windgustmph"></span></p>
+            <p id="maxgusts"><span id="maxdailygust"></span></p>
+        </div>
+
+        <div id='precip_box'>
+            <span id='precip_label' class="conditions_label">Rain</span>
+            <p id="precip_day_label"></p>
+            <p id="precip_value"></p>
+            <p id="precip_next"></p>
+        </div>
+
+        <div id='inside_box'>
+            <span class="conditions_label">Inside</span>
+            <p id="inside_temp"><span id="tempinf"></span></p>
+            <p id="inside_humidity">The humidity inside is <span id="humidityin"></span>%.</p>
+        </div>
+
+        <div id='sun_box'>
+            <span id="sun_label" class="conditions_label"></span>
+            <p id="sun_value"></p>
+            <p id="sun_next"></p>
+
+            <p id="sun_next">Sunrise : <span id="sun_next_value"></span></p>
+            <p id="sun_uv">Solor Pwr : <span id="solarradiation"></span></p>
+        </div>
+
+    </div>
+    </body>
+</html>

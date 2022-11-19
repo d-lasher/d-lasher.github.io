@@ -1,0 +1,146 @@
+
+#wind_box {
+    position: relative;
+    float:left;
+    border-radius: 25px;
+    background-color: rgb(53, 114, 172);
+    margin-top:0px;
+    margin-bottom:10px;
+    margin-left:50px;
+    margin-right:10px;
+    width: 440px;
+    height: 440px;
+  }
+  
+  .windspd_compass{
+    position: absolute;
+    top:12%;
+    left:16.5%;
+    width: 66%;
+    height: 66%;
+    border-radius: 50%;
+    border-style: solid;
+    border-width: 6px;
+    border-color: rgb(73, 138, 199);
+    background-color: rgba(0, 0, 0, 0);
+    pointer-events:none;
+
+    font-size: 24px;
+    font-weight: 700;
+    color: rgb(108, 180, 248);
+    text-align: center;
+  }
+
+  .windspd_N {
+    position: absolute; 
+    top:1%;
+    left:46%;
+    width: 4%;
+    text-align: center;
+  }
+  .windspd_E {
+    position: absolute; 
+    top:45%;
+    left:92%;
+    width: 5%;
+  }
+  .windspd_W {
+    position: absolute; 
+    top:45%;
+    left:3%;
+    width: 5%;
+  }
+
+  .windspd_S {
+    position: absolute; 
+    top:87%;
+    left:48%;
+    width: 4%;
+    text-align: center;
+ }
+
+ .winddir_mask {
+    position: absolute;
+    top:30%;
+    left:30%;
+    width: 40%;
+    height: 40%;
+    border-radius: 50%;
+    background-color: rgb(53, 114, 172);
+    pointer-events:none;
+}
+
+ #windspd {
+    position: absolute;
+    top:31%;
+    left:2%;
+    width:100%;
+    height:100%;
+    color: rgb(236, 243, 243);
+    font-size: 40px;
+    font-weight: 400;
+    text-align: center;
+    line-height: 80%;
+}
+
+#windspeedmph {
+    font-size: 40px;
+    font-weight: 600;
+}
+
+#windspd_units {
+    font-size: 24px;
+    font-weight: 400;
+}
+
+#gusts {
+    position: absolute;
+    bottom:0px;
+    left:10%;
+    width:85%;
+    height:26px;
+    color: rgb(236, 243, 243);
+    font-size: 30px;
+    font-weight: 600;
+    text-align: left;
+}
+
+#maxgusts {
+    position: absolute;
+    bottom:0px;
+    left:10%;
+    width:85%;
+    height:26px;
+    color: rgb(236, 243, 243);
+    font-size: 28px;
+    font-weight: 600;
+    text-align: right;
+}
+
+#winddir {
+    position: absolute;
+    top:50%;
+    left:0%;
+    width: 100%;
+    height: 0px; 
+    background-color: rgba(0, 0, 0, 0);
+    border-top: 1px solid rgb(236, 243, 243);
+    border-bottom: 1px solid rgb(236, 243, 243);
+    transform: rotate(0deg);
+}
+.winddir_head {
+    position: absolute;
+    font-size:24px;
+    top:-17px;
+    right:0px;
+    background-color: rgba(0, 0, 0, 0);
+    color: rgb(236, 243, 243);
+}
+.winddir_tail {
+    position: absolute;
+    font-size:24px;
+    top:-17px;
+    left:0px;
+    background-color: rgba(0, 0, 0, 0);
+    color: rgb(236, 243, 243);
+}

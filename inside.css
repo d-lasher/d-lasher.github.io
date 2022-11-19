@@ -1,0 +1,37 @@
+
+
+
+#inside_box {
+    position: relative;
+    float:left;
+    border-radius: 25px;
+    background-color: rgb(53, 114, 172);
+    margin-top:0px;
+    margin-bottom:10px;    
+    margin-left:50px;
+    margin-right:0px;
+    width: 440px;
+    height: 440px;
+  }
+  
+  #inside_humidity {
+    position: absolute;
+    bottom:0px;
+    left:10%;
+    width:85%;
+    height:60px;
+    color: rgb(236, 243, 243);
+    font-size: 28px;
+    font-weight: 600;
+    text-align: left;
+  }
+
+#inside_temp {
+    position: absolute;
+    top:0%;
+    left:10%;
+    color: rgb(236, 243, 243);
+    font-size: 60px;
+    font-weight: 600;
+    text-align: left;
+}

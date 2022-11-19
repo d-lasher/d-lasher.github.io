@@ -1,0 +1,47 @@
+
+#now_box {
+    position: relative;
+    float:left;
+    border-radius: 25px;
+    background-color: rgb(53, 114, 172);
+    color: rgb(236, 243, 243);
+    font-size: 32px; 
+    font-weight: 600;
+
+    margin-top:0px;
+    margin-left:50px;
+    margin-right:50px;
+    margin-bottom:10px;
+    width: 900px;
+    height: 400px;
+  } 
+
+#now_conditions {
+    position: absolute;
+    top:50px;
+    left:50px;
+    width: 825px;
+    height: 30px;
+    text-align: left;
+}
+
+#now_next_conditions {
+    position: absolute;
+    top:230px;
+    left:50px;
+    width: 825px;
+    height: 30px;
+    text-align: left;
+}
+
+
+#now_next_label {
+    position: absolute;
+    top:200px;
+    left:5%;
+    width:33%;
+    font-size: 24px;
+    font-weight: 700;
+    color: rgb(108, 180, 248);
+    text-align: left;
+}

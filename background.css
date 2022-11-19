@@ -1,0 +1,35 @@
+
+#background_location {
+    font-size: 50px;
+    font-weight: 600;
+    min-height:55px;
+    height:55px;
+    width:100%;
+    text-align: center;
+    margin-top:10px;
+    margin-bottom:0px;
+  }
+
+.background_temp {
+    font-size: 100px;
+    min-height:110px;
+    height:110px;
+    margin-left: 40px;
+    width:960px;
+    text-align: center;    
+    font-weight: 100;
+    margin-top:0px;
+    margin-bottom:10px;
+}
+
+.background_current_conditions{
+    font-size: 50px;
+    font-weight: 600;
+    text-align: center;    
+    font-weight: 500;
+    min-height:55px;
+    height:55px;
+    width:100%;
+    margin-top:0px;
+    margin-bottom:25px;
+}
