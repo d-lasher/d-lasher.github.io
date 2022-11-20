@@ -33,13 +33,15 @@ async function loadBodyElements() {
     initWindBox()
     initInsideBox()
     initPrecipBox()
-    
-    setInterval(updateCurrentWx, (60  * 1000));
+
+    setInterval(updateCurrentWx, (5  * 1000));
     return
 }
 
-function updateCurrentWx() {
+async function updateCurrentWx() {
     console.log("updateCurrentWx")
+    await fetchCurrentWx(1)
+
     updateHourlyBox()
     updateNowBox()
     updateDailyBox()

@@ -28,19 +28,22 @@
 }
 #sun_next {
     position: absolute;
-    bottom:10px;
+    bottom: 30px;
     left:10%;
     width:80%;
-    height:60px;   
+    height:60px;  
 }
 #sun_next_value {
-    float:right;
+    position: absolute;
+    bottom: 30px;
+    right:10%;
+    height:60px;     
     text-align:right;
 }
 
 #sun_uv {
     position: absolute;
-    bottom:50px;
+    bottom:40px;
     left:10%;
     width:80%;
     height:60px;
