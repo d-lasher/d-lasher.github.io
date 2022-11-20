@@ -113,7 +113,7 @@ function getHourlyData(uts,property) {
 }
 
 
-function getWxIcon(uts) {
+function getWxIcon(uts,force_daylight) {
     let skyCover = getHourlyData(uts,'skyCover')
     let snowfallAmt = getHourlyData(uts,'snowfallAmount')
     let pop = getHourlyData(uts,'probabilityOfPrecipitation')
@@ -122,6 +122,8 @@ function getWxIcon(uts) {
     let visibility = getHourlyData(uts,'visibility')
     let temp = getHourlyData(uts,'temperature')
     let daylight = isDaylight(uts)
+    if (force_daylight == true)
+        daylight  = true
 
     if (snowfallAmt > 25) 
         return 'snowheavy.png'
@@ -141,7 +143,7 @@ function getWxIcon(uts) {
     }
     if (visibility < 1600)
         return 'foggy.png'
-    if (windGust > 31) 
+    if (windGust > 48.27)   // 48.27km = 30mph
         return 'wind.png'
     if (skyCover > 90) 
         return 'cloudy.png'
@@ -170,7 +172,7 @@ function getDailyWx(now,deltaDay) {
     let mintemp = getHourlyData(uts,'minTemperature')
     let temp_uom = getUnits('maxTemperature')
 
-    let icon = getWxIcon(uts)
+    let icon = getWxIcon(uts,true)
 
     let wx = {'slug':slug, 'icon':icon, 'temp_uom':temp_uom, 'maxtemp':maxtemp, 'mintemp':mintemp, 'wind_uom':wind_uom, 'windgusts':windgusts}
     return wx
@@ -186,7 +188,7 @@ function getHourlyWx(now,deltaHour){
     let windgusts = getHourlyData(uts,'windGust')
     let wind_uom = getUnits('windGust')
 
-    let icon = getWxIcon(uts)
+    let icon = getWxIcon(uts,false)
 
     let wx = {'slug':slug, 'icon':icon, 'temp_uom':temp_uom, 'temp':temp, 'wind_uom':wind_uom, 'windgusts':windgusts}
     return wx
