@@ -179,7 +179,10 @@ function getDailyWx(now,deltaDay) {
 }
 
 function getHourlyWx(now,deltaHour){
+    let d = new Date(now)
     let uts = now + (deltaHour * 60.0 * 60.0 * 1000.0)
+    let minute = d.getMinutes()
+    uts = uts - (minute * 60 * 1000)
 
     let slug = getHourlySlug(uts)
     let temp = getHourlyData(uts,'temperature')

@@ -1,6 +1,5 @@
 
 function initHourlyBox() {
-
     if (isIOS() == true) {
         let parent_div = document.getElementById("hourly_table_parent");
         parent_div.style.overflow = 'scroll'
@@ -8,31 +7,35 @@ function initHourlyBox() {
         initDrag()
     }
 
-    let now = Date.now()
-    let divTable = document.getElementById("hourly_table_child");
-    for (dHR=0; dHR< 24; dHR++) {
-        hourlyWX = getHourlyWx(now,dHR)
-
-        let template = getHourlyTemplate()
-        template = template.replace("{$time}",hourlyWX['slug'])
-        
-        let temp = CtoF(hourlyWX['temp']) + '&#176;' 
-        template = template.replace("{$temp}",temp)
-
-        let gusts = KmToM(hourlyWX['windgusts']) + "<span style='font-size:20px'>mph</span>" //     
-        template = template.replace("{$gusts}",gusts)
-
-        let icon = hourlyWX['icon']    
-        template = template.replace("{$icon}",icon)
-
-        let ele = htmlToElement(template);
-        divTable.appendChild(ele);
-    }
-
+    updateHourlyBox(true,true)
     return
 }
 
-function updateHourlyBox() {
+function updateHourlyBox(forecastUpdated,conditionsUpdated) {
+    if (forecastUpdated == true) {
+        let now = Date.now()
+        let divTable = document.getElementById("hourly_table_child");
+        divTable.innerHTML = ''
+        for (dHR=0; dHR< 24; dHR++) {
+            hourlyWX = getHourlyWx(now,dHR)
+
+            let template = getHourlyTemplate()
+            template = template.replace("{$time}",hourlyWX['slug'])
+            
+            let temp = CtoF(hourlyWX['temp']) + '&#176;' 
+            template = template.replace("{$temp}",temp)
+
+            let gusts = KmToM(hourlyWX['windgusts']) + "<span style='font-size:20px'>mph</span>" //     
+            template = template.replace("{$gusts}",gusts)
+
+            let icon = hourlyWX['icon']    
+            template = template.replace("{$icon}",icon)
+
+            let ele = htmlToElement(template);
+            divTable.appendChild(ele);
+        }
+    }
+
     return
 }
 

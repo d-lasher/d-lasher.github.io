@@ -10,13 +10,26 @@
     margin-right:50px;
     margin-bottom:10px;
     width: 900px;
-    height: 330px;
+    height: 350px;
   }
+
+#daily_more_btn {
+    position: absolute;
+    color: rgb(108, 180, 248);
+    font-size: 30px;
+    font-weight: 600;
+    bottom:5px;
+    width: 850px;
+    height: 50px;
+    text-align:right;
+    text-decoration: underline;
+}
 
 #daily_table_parent {
     position: absolute;
-    overflow: hidden;
-    font-size: 32px;
+    overflow-x: scroll;
+    overflow-y: hidden;
+    font-size: 40px;
     font-weight: 600;
     margin-top:25px;
     margin-left:25px;
@@ -28,7 +41,8 @@
 #daily_table_child {
     position: relative;
     float:left;
-    width: 2750px;
+    margin-left:25px;
+    width: 1150px;
     height: 250px;
 }
 
@@ -39,8 +53,8 @@
     margin-top:20px;
     margin-bottom:10px;
     margin-right:50px;
-    width: 150px;
-    height: 120px;
+    width: 90px;
+    height: 240px;
     cursor: pointer;
 }
 
@@ -48,27 +62,27 @@
     position: absolute;
     top:20px;
     left:0px;
-    width: 150px;
-    height: 30px;
+    width: 100%;
+    height: 60px;
     text-align: center;
 }
 
 .daily_icon {
     position: absolute;
-    top:80px;
+    top:90px;
     left:0px;
-    width: 150px;
-    height: 50px;
+    width: 100%;
+    height: 60px;
     text-align: center;
 }
 
 .daily_temp_hi {
     position: absolute;
-    top:135px;
-    left:15px;
-    width: 50px;
-    height: 50px;
-    text-align: left;
+    top:175px;
+    left:0px;
+    width: 100%;
+    height: 60px;
+    text-align: center;
 }
 .daily_temp_low {
     position: absolute;
