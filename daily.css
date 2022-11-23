@@ -23,6 +23,7 @@
     height: 50px;
     text-align:right;
     text-decoration: underline;
+    cursor: pointer;
 }
 
 #daily_table_parent {
@@ -55,7 +56,6 @@
     margin-right:50px;
     width: 90px;
     height: 240px;
-    cursor: pointer;
 }
 
 .daily_day {
@@ -100,5 +100,103 @@
     width: 150px;
     height: 50px;
     text-align: center;
+}
+
+
+
+#daily_more_box{
+    position: relative;
+    overflow: hidden;
+    float:left;
+    border-radius: 25px;
+    color: rgb(236, 243, 243);
+    background-color: rgb(53, 114, 172);
+    margin-top:0px;
+    margin-left:50px;
+    margin-right:50px;
+    margin-bottom:10px;
+    width: 900px;
+    height: 0px;
+    transition: 0.5s ease height;
+  }
+  
+#daily_more_table_parent {
+    position: relative;
+    color: rgb(236, 243, 243);
+    font-size: 32px;
+    font-weight: 600;
+    margin-top:25px;
+    margin-left:25px;
+    margin-right:15px;
+    width: 950px;
+}
+
+
+#daily_more_table_child {
+    position: relative;
+    float:left;
+    margin-top: 50px;
+    margin-left: 25px;
+    width: 850px;
+}
+
+.daily_more_item {
+    position: relative;
+    float:left;
+    margin-top:10px;
+    margin-right:50px;
+    margin-bottom:10px;
+    border-bottom: 1px solid rgb(108, 180, 248);
+    width: 800px;
+    height: 60px;
+}
+
+
+.daily_more_day {
+    position: absolute;
+    top:0px;
+    left:0px;
+    width: 60px;
+    text-align: left;
+}
+
+.daily_more_icon {
+    position: absolute;
+    top:0px;
+    left:200px;
+    width: 60px;
+    width: 60px;
+    text-align: left;
+}
+
+.daily_more_temp_low {
+    position: absolute;
+    top:0px;
+    left: 475px;
+    width: 100px;
+    text-align: left;
+}
+.daily_more_temp_hi {
+    position: absolute;
+    top:0px;
+    left: 575px;
+    width: 100px;
+    text-align: left;
+}
+
+.daily_more_gusts {
+    position: absolute;
+    top:0px;
+    left: 725px;
+    width: 100px;
+    text-align: right;
+}
+
+.daily_more_precip {
+    position: absolute;
+    top:0px;
+    left: 325px;
+    width: 200px;
+    text-align: left;
 }
 

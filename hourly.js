@@ -99,12 +99,12 @@ function hourlyToggleMore() {
     let box = document.getElementById("hourly_more_box");
     if (hourlyMoreBoxHidden == true) {
         btn.innerHTML = 'Less...'
-        box.style.display = 'inline'
         hourlyMoreBoxHidden = false
+        box.style.height = "750px"
     } else {
         btn.innerHTML = 'More...'
-        box.style.display = 'none'
         hourlyMoreBoxHidden = true    
+        box.style.height = "0px"
     }
 }
 

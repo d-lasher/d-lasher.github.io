@@ -50,7 +50,7 @@ function getSnowForecast() {
     let expectations = []
     for (i=0; i<7; i += 1) {
         snowfall =  sumHourlyData(min,max,"snowfallAmount")
-        slug = "Snow"
+        slug = "Snow Forecast"
 
         if (i==0)
             time_frame = "The rest of today"
