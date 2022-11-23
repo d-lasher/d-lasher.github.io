@@ -13,14 +13,12 @@
     margin-right:50px;
     margin-bottom:10px;
     width: 900px;
-    height: 470px;
   } 
 
   #now_parent {
     overflow:hidden;
     margin:0px;
     width: 900px;
-    height: 455px;
     text-align: left;
   }
 
@@ -35,7 +33,7 @@
 
 #now_next_label {
     margin-top:0px;
-    margin-left:50px;
+    margin-left:30px;
     margin-bottom:10px;
     margin-right:0px;
     width: 830px;
@@ -50,7 +48,7 @@
 #now_next_conditions {  
     margin-top:0px;
     margin-left:50px;
-    margin-bottom:10px;
+    margin-bottom:25px;
     margin-right:0px;
     width: 830px;
     text-align: left;
