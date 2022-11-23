@@ -13,8 +13,8 @@ body {
 
   .forecast_label {
     position: absolute;
-    top:5%;
-    left:5%;
+    top:10px;
+    left:30px;
     width:33%;
     font-size: 30px;
     font-weight: 700;
@@ -24,8 +24,8 @@ body {
 
 .conditions_label {
     position: absolute;
-    top:5%;
-    left:5%;
+    top:10px;
+    left:30px;
     width:80%;
     font-size: 30px;
     font-weight: 700;

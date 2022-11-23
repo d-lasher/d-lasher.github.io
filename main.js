@@ -125,3 +125,7 @@ function htmlToElement(html) {
     return template.content.firstChild;
 }
 
+function GetDayOfWeek(dow) {
+    const weekday = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+    return weekday[dow]
+}

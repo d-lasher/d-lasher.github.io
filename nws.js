@@ -15,6 +15,11 @@ function CtoF(c) {
    return f
 }
 
+function MMtoIN(cm) {
+    let inch = (cm / 25.4)
+    return inch
+ }
+
 async function fetchNwsForecast(id) {
     jsonLocation = await getNwsLocationJSON(id);
     location_properties = jsonLocation['properties']
@@ -98,6 +103,22 @@ function isDaylight(uts) {
     return true
 }
 
+function sumHourlyData(min,max,property) {
+    properties = jsonGridData["properties"]
+    dataset = properties[property]["values"]
+
+    total = 0.0
+    for (idx=0; idx<dataset.length; idx++) {
+        valid_time = nwsTimeToUTS(dataset[idx]['validTime'])
+        if ((valid_time > min) && (valid_time <= max))
+            total += dataset[idx]["value"]
+        if ((valid_time > max))
+            break
+    }
+    return total
+
+}
+
 function getHourlyData(uts,property) {
     properties = jsonGridData["properties"]
     dataset = properties[property]["values"]
@@ -112,6 +133,47 @@ function getHourlyData(uts,property) {
     return value
 }
 
+function getWxLabel(uts) {
+    let skyCover = getHourlyData(uts,'skyCover')
+    let snowfallAmt = getHourlyData(uts,'snowfallAmount')
+    let pop = getHourlyData(uts,'probabilityOfPrecipitation')
+    let pot = getHourlyData(uts,'probabilityOfThunder')
+    let windGust = getHourlyData(uts,'windGust')
+    let visibility = getHourlyData(uts,'visibility')
+    let temp = getHourlyData(uts,'temperature')
+    let daylight = isDaylight(uts)
+
+    if (snowfallAmt > 25) 
+        return 'Heavy Snow'
+    if (snowfallAmt > 10) 
+        return 'Snow'
+    if (snowfallAmt > 0) 
+        return 'Flurries'
+    if (pot > 50) {
+        return 'Thunderstorms'
+    }
+    if ((pop > 33) && (temp > 2)){
+        if (windGust > 31) 
+           return 'Stormy'
+        return 'Rain'
+    }
+    if (visibility < 1600)
+        return 'Foggy'
+    if (windGust > 48.27)   // 48.27km = 30mph
+        return 'Windy'
+    if (skyCover > 66) 
+        return 'Cloudy'
+    if (skyCover > 33) {
+        return 'Partly Cloudy'
+    }
+
+    if (daylight == true) 
+        return 'Sunny'
+    if (daylight == false) 
+        return 'Clear'
+
+    return ''
+}
 
 function getWxIcon(uts,force_daylight) {
     let skyCover = getHourlyData(uts,'skyCover')
@@ -145,7 +207,7 @@ function getWxIcon(uts,force_daylight) {
         return 'foggy.png'
     if (windGust > 48.27)   // 48.27km = 30mph
         return 'wind.png'
-    if (skyCover > 90) 
+    if (skyCover > 66) 
         return 'cloudy.png'
     if (skyCover > 33) {
         if (daylight == false) 
@@ -191,9 +253,27 @@ function getHourlyWx(now,deltaHour){
     let windgusts = getHourlyData(uts,'windGust')
     let wind_uom = getUnits('windGust')
 
+    let precp_type = ''
+    let snow_amnt = 0.0
+    let rain_amnt = 0.0
+    let pop = getHourlyData(uts,'probabilityOfPrecipitation')
+    let snowfall = getHourlyData(uts,'snowfallAmount')
+    if (snowfall > 0.0) {
+        precp_type = 'Snow'
+        snow_amnt = snowfall  / 6.0
+    } else {
+        let quantitativePrecipitation = getHourlyData(uts,'quantitativePrecipitation') 
+        if (quantitativePrecipitation > 0.0) {
+            precp_type = 'Rain'
+            rain_amnt = quantitativePrecipitation   / 6.0       
+        }
+    }
+
     let icon = getWxIcon(uts,false)
 
-    let wx = {'slug':slug, 'icon':icon, 'temp_uom':temp_uom, 'temp':temp, 'wind_uom':wind_uom, 'windgusts':windgusts}
+    let wx = {'slug':slug, 'icon':icon, 'temp_uom':temp_uom, 'temp':temp, 'wind_uom':wind_uom, 
+                'windgusts':windgusts, 'precp_type':precp_type,'pop':pop,
+                'snow_amnt':snow_amnt, 'rain_amnt':rain_amnt   }
     return wx
 }
 
@@ -210,6 +290,17 @@ function getTodaysWx() {
     wxToday[1] = {'slug':slug, 'forecast':forecast, 'shortForecast':shortForecast}
 
     return wxToday
+}
+
+function getShortForecast(forecast) 
+{
+    console.log('shorten : ' + forecast)
+    idx = forecast.indexOf('then')
+    if (idx > -1) {
+        forecast = forecast.slice(0,idx)
+    }
+
+    return forecast
 }
 
 async function getSunriseSunset() {

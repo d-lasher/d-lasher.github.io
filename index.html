@@ -58,12 +58,24 @@
                 <div id="hourly_table_child">
                 </div>    
             </div>
+            <span id="hourly_more_btn" onclick="hourlyToggleMore()">More...</span>
         </div>
+
+        <div id='hourly_more_box'>
+            <span class="forecast_label">Detailed Forecast</span>
+            <div id="hourly_more_table_parent">
+                <div id="hourly_more_table_child">
+                </div>    
+            </div>
+        </div>
+        
         <div id='now_box'>
             <span id='now_label' class="forecast_label"></span>
-            <div id='now_conditions'></div>
-            <span id='now_next_label'></span>
-            <div id='now_next_conditions'></div>
+            <div id="now_parent">
+                <div id='now_conditions'></div>
+                <span id='now_next_label'></span>
+                <div id='now_next_conditions'></div>
+            </div>
         </div>
 
         <div id='daily_box'>
@@ -88,7 +100,7 @@
                 </div>
                 <div class="winddir_mask"></div>
             </span>
-            <p id="windspd"><span id="windspeedmph">0</span><br/><span id="windspd_units">MPH</span></p>
+            <p id="windspd"><span id="windspeedmph">0</span><br/><span id="windspd_units">mph</span></p>
             
             <p id="maxgusts"><span id="maxdailygust"></span></p>
         </div>

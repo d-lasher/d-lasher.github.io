@@ -18,13 +18,14 @@
 
 #sun_value {
     position: absolute;
-    top:0%;
-    left:10%;
+    top:50px;
+    left:30px;
+    width: 60%;
+    height: 60px;
     color: rgb(236, 243, 243);
     font-size: 60px;
     font-weight: 600;
-    text-align: left;
- 
+    text-align: center;
 }
 #sun_next {
     position: absolute;
