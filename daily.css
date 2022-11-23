@@ -163,9 +163,17 @@
 .daily_more_icon {
     position: absolute;
     top:0px;
-    left:200px;
+    left:150px;
     width: 60px;
     width: 60px;
+    text-align: left;
+}
+ 
+.daily_more_precip {
+    position: absolute;
+    top:0px;
+    left:255px;
+    width: 200px;
     text-align: left;
 }
 
@@ -192,11 +200,4 @@
     text-align: right;
 }
 
-.daily_more_precip {
-    position: absolute;
-    top:0px;
-    left: 325px;
-    width: 200px;
-    text-align: left;
-}
 

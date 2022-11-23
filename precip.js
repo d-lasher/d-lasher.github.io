@@ -59,7 +59,7 @@ function getSnowForecast() {
             time_frame = GetDayOfWeek(dow)
         }
 
-        result = {'snowfall':snowfall, 'slug':slug, 'time_frame':time_frame }
+        result = {'snowfall':snowfall, 'slug':slug, 'time_frame':time_frame, 'day':i}
         if (snowfall > 0) 
             expectations.push(result)
 
@@ -71,7 +71,7 @@ function getSnowForecast() {
         snowfall =  0
         slug = "No Snow Expected"
         time_frame = "Next 7 Days"
-        result = {'snowfall':snowfall, 'slug':slug, 'time_frame':time_frame }
+        result = {'snowfall':snowfall, 'slug':slug, 'time_frame':time_frame, 'day':-1 }
         expectations.push(result)    
     }
 
