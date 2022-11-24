@@ -129,3 +129,12 @@ function GetDayOfWeek(dow) {
     const weekday = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
     return weekday[dow]
 }
+
+function GetMidnight() {
+    let now = Date.now()
+    const d = new Date();               //  start looking for snow tommorow at 6:00AM
+    let minutes = 59 - d.getMinutes();
+    let hrs = 23 - d.getHours();
+    let midnight = now + (((hrs * 60 * 60) + (minutes * 60) + 60) * 1000)
+    return midnight
+}

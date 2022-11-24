@@ -116,7 +116,21 @@ function sumHourlyData(min,max,property) {
             break
     }
     return total
+}
+function maxHourlyData(min,max,property) {
+    properties = jsonGridData["properties"]
+    dataset = properties[property]["values"]
 
+    max_value = -1e6
+    for (idx=0; idx<dataset.length; idx++) {
+        valid_time = nwsTimeToUTS(dataset[idx]['validTime'])
+        if ((valid_time > min) && (valid_time <= max))
+            if (dataset[idx]["value"] > max_value)
+                max_value = dataset[idx]["value"]
+        if ((valid_time > max))
+            break
+    }
+    return max_value
 }
 
 function getHourlyData(uts,property) {
@@ -145,7 +159,7 @@ function getWxLabel(uts) {
 
     if (snowfallAmt > 25) 
         return 'Heavy Snow'
-    if (snowfallAmt > 10) 
+    if (snowfallAmt > 5) 
         return 'Snow'
     if (snowfallAmt > 0) 
         return 'Flurries'
@@ -175,21 +189,22 @@ function getWxLabel(uts) {
     return ''
 }
 
-function getWxIcon(uts,force_daylight) {
+function getWxIcon(uts_min,uts_max,force_daylight) {
+    uts = uts_min
     let skyCover = getHourlyData(uts,'skyCover')
-    let snowfallAmt = getHourlyData(uts,'snowfallAmount')
-    let pop = getHourlyData(uts,'probabilityOfPrecipitation')
-    let pot = getHourlyData(uts,'probabilityOfThunder')
-    let windGust = getHourlyData(uts,'windGust')
+    let snowfallAmt = sumHourlyData(uts_min,uts_max,'snowfallAmount')
+    let pop = maxHourlyData(uts_min,uts_max,'probabilityOfPrecipitation')
+    let pot = maxHourlyData(uts_min,uts_max,'probabilityOfThunder')
+    let windGust = maxHourlyData(uts_min,uts_max,'windGust')
     let visibility = getHourlyData(uts,'visibility')
-    let temp = getHourlyData(uts,'temperature')
+    let temp = maxHourlyData(uts_min,uts_max,'temperature')
     let daylight = isDaylight(uts)
     if (force_daylight == true)
         daylight  = true
 
     if (snowfallAmt > 25) 
         return 'snowheavy.png'
-    if (snowfallAmt > 10) 
+    if (snowfallAmt > 5) 
         return 'snow.png'
     if (pot > 50) {
         if (daylight == false)
@@ -224,17 +239,24 @@ function getWxIcon(uts,force_daylight) {
 }
 
 function getDailyWx(now,deltaDay) {
+    const d = new Date();               //  start looking for snow tommorow at 6:00AM
+    let prev_midnight = GetMidnight() + ((deltaDay-1) * 24.0 * 60.0 * 60.0 * 1000.0)
+    let next_midnight = GetMidnight() + (deltaDay * 24.0 * 60.0 * 60.0 * 1000.0)
     let uts = now + (deltaDay * 24.0 * 60.0 * 60.0 * 1000.0)
     let slug = getDailySlug(uts)
 
-    let windgusts = getHourlyData(uts,'windGust')
+    let minTempTime = next_midnight
+    if (d.getHours() <= 7)
+        minTempTime = prev_midnight
+
+    let windgusts = maxHourlyData(prev_midnight,next_midnight,'windGust')
     let wind_uom = getUnits('windGust')
 
-    let maxtemp = getHourlyData(uts,'maxTemperature')
-    let mintemp = getHourlyData(uts,'minTemperature')
+    let maxtemp = getHourlyData(next_midnight,'maxTemperature')
+    let mintemp = getHourlyData(minTempTime,'minTemperature')
     let temp_uom = getUnits('maxTemperature')
 
-    let icon = getWxIcon(uts,true)
+    let icon = getWxIcon(prev_midnight,next_midnight,true)
 
     let wx = {'slug':slug, 'icon':icon, 'temp_uom':temp_uom, 'maxtemp':maxtemp, 'mintemp':mintemp, 'wind_uom':wind_uom, 'windgusts':windgusts}
     return wx
@@ -242,9 +264,8 @@ function getDailyWx(now,deltaDay) {
 
 function getHourlyWx(now,deltaHour){
     let d = new Date(now)
-    let uts = now + (deltaHour * 60.0 * 60.0 * 1000.0)
     let minute = d.getMinutes()
-    uts = uts - (minute * 60 * 1000)
+    let uts = now - (minute * 60 * 1000) + (deltaHour * 60.0 * 60.0 * 1000.0) 
 
     let slug = getHourlySlug(uts)
     let temp = getHourlyData(uts,'temperature')
@@ -269,7 +290,7 @@ function getHourlyWx(now,deltaHour){
         }
     }
 
-    let icon = getWxIcon(uts,false)
+    let icon = getWxIcon(uts,uts,false)
 
     let wx = {'slug':slug, 'icon':icon, 'temp_uom':temp_uom, 'temp':temp, 'wind_uom':wind_uom, 
                 'windgusts':windgusts, 'precp_type':precp_type,'pop':pop,

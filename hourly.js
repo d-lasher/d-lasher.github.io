@@ -25,6 +25,7 @@ function updateHourlyBox(forecastUpdated,conditionsUpdated) {
             template = template.replace("{$time}",hourlyWX['slug'])
             
             let temp = CtoF(hourlyWX['temp']) + '&#176;' 
+//            temp = (hourlyWX['temp'].toFixed(2)) + '&#176;' 
             template = template.replace("{$temp}",temp)
 
 //            let gusts = KmToM(hourlyWX['windgusts']) + "<span style='font-size:20px'>mph</span>" //     

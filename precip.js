@@ -42,22 +42,16 @@ function updatePrecipBox(forecastUpdated,conditionsUpdated) {
 function getSnowForecast() {
     let now = Date.now()
     const d = new Date();               //  start looking for snow tommorow at 6:00AM
-    let minutes = 59 - d.getMinutes();
-    let hrs = 24 - d.getHours() + 5;
-    let min = now
-    let max = min + (((hrs * 60 * 60) + (minutes * 60) + 60) * 1000)
+    let max = GetMidnight()
+    let min = max - (24 * 60 * 60 * 1000)
 
     let expectations = []
     for (i=0; i<7; i += 1) {
         snowfall =  sumHourlyData(min,max,"snowfallAmount")
         slug = "Snow Forecast"
 
-        if (i==0)
-            time_frame = "The rest of today"
-        else {
-            dow = new Date(min).getDay()
-            time_frame = GetDayOfWeek(dow)
-        }
+        dow = new Date(min).getDay()
+        time_frame = GetDayOfWeek(dow)
 
         result = {'snowfall':snowfall, 'slug':slug, 'time_frame':time_frame, 'day':i}
         if (snowfall > 0) 
@@ -74,7 +68,6 @@ function getSnowForecast() {
         result = {'snowfall':snowfall, 'slug':slug, 'time_frame':time_frame, 'day':-1 }
         expectations.push(result)    
     }
-
-    console.log( expectations )
+    console.log(expectations)
     return expectations
 }

@@ -65,7 +65,6 @@ function updateMoreDailyBox() {
     divTable.innerHTML = ''
 
     snowForecast = getSnowForecast()
-    console.log(snowForecast)
 
     for (dDay=0; dDay<8; dDay++) {
         dailyWX = getDailyWx(now,dDay)
