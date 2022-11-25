@@ -20,6 +20,14 @@ function MMtoIN(cm) {
     return inch
  }
 
+function AngletoSLug(angle) {
+    let slug = [ 'N','NE','E','SE','S','SW','W','NW','N','N']
+    let idx = Math.round( (angle / 45.0) + 0.5  )
+    idx =  Math.max(0, idx)
+    idx = Math.min(idx,8)
+    return slug[idx]
+}
+
 async function fetchNwsForecast(id) {
     jsonLocation = await getNwsLocationJSON(id);
     location_properties = jsonLocation['properties']
@@ -271,6 +279,7 @@ function getHourlyWx(now,deltaHour){
     let temp = getHourlyData(uts,'temperature')
     let temp_uom = getUnits('temperature')
 
+    let winddir = getHourlyData(uts,'windDirection')
     let windgusts = getHourlyData(uts,'windGust')
     let wind_uom = getUnits('windGust')
 
@@ -293,7 +302,7 @@ function getHourlyWx(now,deltaHour){
     let icon = getWxIcon(uts,uts,false)
 
     let wx = {'slug':slug, 'icon':icon, 'temp_uom':temp_uom, 'temp':temp, 'wind_uom':wind_uom, 
-                'windgusts':windgusts, 'precp_type':precp_type,'pop':pop,
+                'windgusts':windgusts, 'winddir':winddir,'precp_type':precp_type,'pop':pop,
                 'snow_amnt':snow_amnt, 'rain_amnt':rain_amnt   }
     return wx
 }

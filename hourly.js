@@ -66,6 +66,9 @@ function updateMoreHourlyBox() {
         let gusts = KmToM(hourlyWX['windgusts']) + "<span style='font-size:20px'>mph</span>" //     
         template = template.replace("{$gusts}",gusts)
 
+        let winddir = AngletoSLug(hourlyWX['winddir'])
+        template = template.replace("{$winddir}",winddir)
+
         total_snow_amnt += MMtoIN( hourlyWX['snow_amnt'] )
         total_rain_amnt += MMtoIN( hourlyWX['rain_amnt'] )
 
@@ -125,6 +128,7 @@ function getMoreHourlyTemplate() {
                         <span class="hourly_more_icon"><img src="/img/{$icon}" style="width:50px;height:50px;"/></span>\
                         <span class="hourly_more_precip">{$precp_amount} {$precp_type}</span>\
                         <span class="hourly_more_temp">{$temp}</span>\
+                        <span class="hourly_more_winddir">{$winddir}</span>\
                         <span class="hourly_more_gusts">{$gusts}</span>\
                     </div>'
     return template

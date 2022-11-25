@@ -162,15 +162,23 @@
 .hourly_more_temp {
     position: absolute;
     top:0px;
-    left: 575px;
+    left: 400px;
     width: 100px;
     text-align: left;
+}
+
+.hourly_more_winddir {
+    position: absolute;
+    top:0px;
+    left: 680px;
+    width: 100px;
+    text-align: right;
 }
 
 .hourly_more_gusts {
     position: absolute;
     top:0px;
-    left: 725px;
+    left: 590px;
     width: 100px;
     text-align: right;
 }
