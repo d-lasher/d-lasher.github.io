@@ -64,8 +64,6 @@ function updateMoreDailyBox() {
     let divTable = document.getElementById("daily_more_table_child");
     divTable.innerHTML = ''
 
-    snowForecast = getSnowForecast()
-
     for (dDay=0; dDay<8; dDay++) {
         dailyWX = getDailyWx(now,dDay)
 
@@ -85,16 +83,13 @@ function updateMoreDailyBox() {
         template = template.replace("{$icon}",icon)
 
         precipt = ''
-        for (i=0; i<snowForecast.length; i++) {
-            if (dDay == snowForecast[i]['day']) {
-                snow_amnt = MMtoIN( snowForecast[i]['snowfall'])
-                if (snow_amnt < 0.0999) {
-                    precipt = "Flurries"
-                } else  {
-                    precipt = snow_amnt.toFixed(1) + '" Snow'
-                }
-                break
-            }
+        let snowfall_amt = dailyWX['snowfall_amt']
+        if (snowfall_amt > 0) {
+            snow_amnt = MMtoIN( snowfall_amt )
+            if (snow_amnt < 0.0999) 
+                precipt = "Flurries"
+            else  
+                precipt = snow_amnt.toFixed(1) + '" Snow'
         }
         template = template.replace("{$precp}",precipt)
 

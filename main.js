@@ -32,6 +32,7 @@ async function loadBodyElements() {
     initWindBox()
     initInsideBox()
     initPrecipBox()
+    initAlertsBox()
 
     return
 }
@@ -39,7 +40,15 @@ async function loadBodyElements() {
 async function updateCurrentWx() {
     console.log("Update Conditions")
 
-    await fetchCurrentWx(1)
+    res = await fetchCurrentWx(1)
+    if (res == null) {
+        setTimeout(updateCurrentWx, (5  * 1000));
+        return
+    }
+    if (hasForecastData() == false) {
+        setTimeout(updateForecastWx, (5  * 1000));
+        return
+    }
 
     updateHourlyBox(false,true)
     updateNowBox(false,true)
@@ -48,6 +57,7 @@ async function updateCurrentWx() {
     updateWindBox(false,true)
     updateInsideBox(false,true)   
     updatePrecipBox(false,true) 
+    updateAlertsBox(false,true)
 
     return
 }
@@ -56,6 +66,10 @@ async function updateForecastWx() {
     console.log("Update Forecast")
 
     await fetchNwsForecast(1)
+    if (hasForecastData() == false) {
+        setTimeout(updateForecastWx, (5  * 1000));
+        return
+    }
 
     updateHourlyBox(true,false)
     updateNowBox(true,false)
@@ -64,6 +78,7 @@ async function updateForecastWx() {
     updateWindBox(true,false)
     updateInsideBox(true,false)
     updatePrecipBox(true,false)
+    updateAlertsBox(true,false)
 
     //  forecast data 1 minute after the top of the hour
     const d = new Date();

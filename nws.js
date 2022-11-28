@@ -1,9 +1,12 @@
 
-var jsonLocation
-var jsonDailyForecast
-var jsonHourlyForecast
-var jsonGridData
-var jsonSunriseSunset
+var jsonLocation = null
+var jsonDailyForecast = null
+var jsonGridData = null
+var jsonSunriseSunset = null
+var jsonNwsAlerts = null
+
+var my_lat = '39.9227'
+var my_long = '-105.4049'
 
 function KmToM(km) {
     let m = parseInt( km / 1.609 )
@@ -28,17 +31,31 @@ function AngletoSLug(angle) {
     return slug[idx]
 }
 
-async function fetchNwsForecast(id) {
-    jsonLocation = await getNwsLocationJSON(id);
-    location_properties = jsonLocation['properties']
-    jsonDailyForecast = await getNwsWsJSON( location_properties['forecast'] )
-    jsonHourlyForecast = await getNwsWsJSON( location_properties['forecastHourly'] )
-    jsonGridData = await getNwsWsJSON( location_properties['forecastGridData'] )
-    jsonSunriseSunset = await getSunriseSunset()
+function hasForecastData() {
+    if ((jsonDailyForecast == null) || (jsonGridData == null) || (jsonSunriseSunset == null)) 
+        return false
+    return true
+}
 
+async function fetchNwsForecast(id) {
+    if (jsonLocation == null) {
+        jsonLocation = await fetchNwsLocationJSON(id);
+        if ((jsonLocation == null) || (jsonLocation.hasOwnProperty('properties') == false)) 
+            return false
+    }
+
+    location_properties = jsonLocation['properties']
+    jsonDailyForecast = await fetchNwsWsJSON( location_properties['forecast'] )
+    jsonGridData = await fetchNwsWsJSON( location_properties['forecastGridData'] )
+    jsonNwsAlerts = await fetchNwsAlertsJSON()
+    jsonSunriseSunset = await fetchSunriseSunset()
+
+    console.log(jsonLocation)
     console.log(jsonDailyForecast)
     console.log(jsonGridData)
-    return null
+    console.log(jsonNwsAlerts)
+
+    return hasForecastData()
 }
 
 function nwsTimeToUTS(nwsTimeString) {
@@ -112,13 +129,16 @@ function isDaylight(uts) {
 }
 
 function sumHourlyData(min,max,property) {
-    properties = jsonGridData["properties"]
-    dataset = properties[property]["values"]
+    if (min == max)
+        return getHourlyData(min,property)
+        
+    let properties = jsonGridData["properties"]
+    let dataset = properties[property]["values"]
+    let total = 0.0
 
-    total = 0.0
     for (idx=0; idx<dataset.length; idx++) {
-        valid_time = nwsTimeToUTS(dataset[idx]['validTime'])
-        if ((valid_time > min) && (valid_time <= max))
+        let valid_time = nwsTimeToUTS(dataset[idx]['validTime'])
+        if ((valid_time > min) && (valid_time <= max)) 
             total += dataset[idx]["value"]
         if ((valid_time > max))
             break
@@ -126,12 +146,15 @@ function sumHourlyData(min,max,property) {
     return total
 }
 function maxHourlyData(min,max,property) {
-    properties = jsonGridData["properties"]
-    dataset = properties[property]["values"]
+    if (min == max)
+        return getHourlyData(min,property)
+        
+    let properties = jsonGridData["properties"]
+    let dataset = properties[property]["values"]
+    let max_value = -1e6
 
-    max_value = -1e6
     for (idx=0; idx<dataset.length; idx++) {
-        valid_time = nwsTimeToUTS(dataset[idx]['validTime'])
+        let valid_time = nwsTimeToUTS(dataset[idx]['validTime'])
         if ((valid_time > min) && (valid_time <= max))
             if (dataset[idx]["value"] > max_value)
                 max_value = dataset[idx]["value"]
@@ -155,15 +178,16 @@ function getHourlyData(uts,property) {
     return value
 }
 
-function getWxLabel(uts) {
+function getWxLabel(uts,currentWx) {
     let skyCover = getHourlyData(uts,'skyCover')
     let snowfallAmt = getHourlyData(uts,'snowfallAmount')
     let pop = getHourlyData(uts,'probabilityOfPrecipitation')
     let pot = getHourlyData(uts,'probabilityOfThunder')
-    let windGust = getHourlyData(uts,'windGust')
     let visibility = getHourlyData(uts,'visibility')
-    let temp = getHourlyData(uts,'temperature')
     let daylight = isDaylight(uts)
+
+    let windGust = currentWx['windgustmph']
+    let temp = currentWx['temp1f']
 
     if (snowfallAmt > 25) 
         return 'Heavy Snow'
@@ -174,7 +198,7 @@ function getWxLabel(uts) {
     if (pot > 50) {
         return 'Thunderstorms'
     }
-    if ((pop > 33) && (temp > 2)){
+    if ((pop > 33) && (temp > 36)){
         if (windGust > 31) 
            return 'Stormy'
         return 'Rain'
@@ -257,6 +281,7 @@ function getDailyWx(now,deltaDay) {
     if (d.getHours() <= 7)
         minTempTime = prev_midnight
 
+    let snowfall_amt = sumHourlyData(prev_midnight,next_midnight,'snowfallAmount')
     let windgusts = maxHourlyData(prev_midnight,next_midnight,'windGust')
     let wind_uom = getUnits('windGust')
 
@@ -266,7 +291,7 @@ function getDailyWx(now,deltaDay) {
 
     let icon = getWxIcon(prev_midnight,next_midnight,true)
 
-    let wx = {'slug':slug, 'icon':icon, 'temp_uom':temp_uom, 'maxtemp':maxtemp, 'mintemp':mintemp, 'wind_uom':wind_uom, 'windgusts':windgusts}
+    let wx = {'slug':slug, 'icon':icon, 'temp_uom':temp_uom, 'maxtemp':maxtemp, 'mintemp':mintemp, 'wind_uom':wind_uom, 'windgusts':windgusts, 'snowfall_amt':snowfall_amt}
     return wx
 }
 
@@ -333,12 +358,17 @@ function getShortForecast(forecast)
     return forecast
 }
 
-async function getSunriseSunset() {
+async function fetchSunriseSunset() {
     let wx_url = 'https://api.sunrise-sunset.org/json?formatted=0&'
-    let wx_points = 'lat=39.9227&lng=-105.4049'
+    let wx_points = 'lat='+my_lat+'&lng='+my_long
     let url = wx_url + wx_points
+
+    console.log(url)
     try {
         let res = await fetch(url);
+        if (res.ok == false)
+            return null      
+
         return await res.json();
     } catch (error) {
         console.log("error")
@@ -348,11 +378,13 @@ async function getSunriseSunset() {
 }
 
 
-async function getNwsWsJSON(wx_url) {
+async function fetchNwsWsJSON(wx_url) {
     console.log(wx_url)
-
     try {
         let res = await fetch(wx_url);
+        if (res.ok == false)
+            return null
+
         return await res.json();
     } catch (error) {
         console.log("error")
@@ -361,12 +393,36 @@ async function getNwsWsJSON(wx_url) {
     return null
 }
 
-async function getNwsLocationJSON(id) {
+async function fetchNwsLocationJSON(id) {
     let wx_url = 'https://api.weather.gov/points/'
-    let wx_points = '39.9227,-105.4049'
+    let wx_points = my_lat + ',' + my_long
     let url = wx_url + wx_points
+
+    console.log(url)
     try {
         let res = await fetch(url);
+        if (res.ok == false)
+            return null
+
+        return await res.json();
+    } catch (error) {
+        console.log("error")
+        console.log(error);
+    }
+    return null
+}
+
+async function fetchNwsAlertsJSON(id) {
+    let wx_url = 'https://api.weather.gov/alerts/active?point='
+    let wx_points = my_lat + ',' + my_long
+    let url = wx_url + wx_points
+
+    console.log(url)
+    try {
+        let res = await fetch(url);
+        if (res.ok == false)
+            return null
+
         return await res.json();
     } catch (error) {
         console.log("error")

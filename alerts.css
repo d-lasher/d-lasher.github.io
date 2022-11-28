@@ -1,0 +1,75 @@
+
+
+#alerts_box{
+    display: none;
+    position: relative;
+    float:left;
+    border-radius: 25px;
+    color: rgb(236, 243, 243);
+    font-size: 32px; 
+    font-weight: 600;    
+    background-color: rgb(53, 114, 172);
+    margin-top:40px;
+    margin-left:50px;
+    margin-right:50px;
+    margin-bottom:-20px;
+    width: 900px;
+  }
+
+  
+  #alerts_table_parent {
+    overflow:hidden;
+    margin:0px;
+    width: 850px;
+    margin-left:40px;
+    margin-top:40px;
+    text-align: left;
+  }
+
+  .alerts_item {
+    margin-top:20px;
+    margin-bottom:20px;
+  }
+
+  .alerts_event {
+    font-size: 36px; 
+    font-weight: 700;    
+  }
+
+  .alerts_headline {
+    display:none;
+    font-size: 32px; 
+    font-weight: 600;  
+    margin-top:20px;
+    width: 830px; 
+  }
+
+  .alerts_more_btn {
+    color: rgb(108, 180, 248);
+    font-size: 30px;
+    font-weight: 600;
+    width: 820px;
+    text-align:right;
+    text-decoration: underline;
+    cursor: pointer;
+  }
+
+  .alerts_description {
+    display:none;
+    font-size: 32px; 
+    font-weight: 600;  
+    margin-top:20px;
+    width: 830px;
+  }
+
+
+#alerts_conditions {
+    margin-top:60px;
+    margin-left:50px;
+    margin-bottom:10px;
+    margin-right:0px;
+    width: 830px;
+    text-align: left;
+}
+
+ 

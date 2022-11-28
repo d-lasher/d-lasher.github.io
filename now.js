@@ -27,6 +27,6 @@ function updateNowBox(forecastUpdated,conditionsUpdated) {
     }
 
     let now = Date.now()
-    document.querySelector('#background_current_conditions').innerHTML = getWxLabel(now);
+    document.querySelector('#background_current_conditions').innerHTML = getWxLabel(now,wx);
     return
 }

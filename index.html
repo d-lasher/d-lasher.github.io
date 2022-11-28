@@ -30,6 +30,7 @@
         <link rel="stylesheet" href="wind.css">
         <link rel="stylesheet" href="inside.css">
         <link rel="stylesheet" href="precip.css">
+        <link rel="stylesheet" href="alerts.css">
 
         <script src="aws.js"></script>
         <script src="nws.js"></script>
@@ -42,6 +43,7 @@
         <script src="wind.js"></script>
         <script src="inside.js"></script>
         <script src="precip.js"></script>
+        <script src="alerts.js"></script>
 
         <script src="main.js"></script>
     </head>
@@ -51,7 +53,13 @@
         <h1 id='background_location'>Mountain Home</h1>
         <h1 class='background_temp'> <span id='temp1f'></span></h1>
         <h1 class='background_current_conditions'><span id='background_current_conditions'> </span></h1>
-                
+             
+        <div id='alerts_box'>
+            <span class="conditions_label">Alerts, Watchs, and Warnings</span>
+            <div id="alerts_table_parent">
+            </div>
+        </div>
+
         <div id='hourly_box'>
             <span class="forecast_label">Hourly Forecast</span>
             <div id="hourly_table_parent">
