@@ -95,7 +95,7 @@ async function fetchData() {
     await fetchNwsForecast(1)
 
     //  We refetch the current wx every 30 seconds and refetch the
-    setInterval(updateCurrentWx, (30  * 1000));
+    setInterval(updateCurrentWx, (45  * 1000));
 
     //  forecast data 1 minute after the top of the hour
     const d = new Date();

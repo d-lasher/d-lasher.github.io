@@ -189,7 +189,7 @@ function getWxLabel(uts,currentWx) {
     let windGust = currentWx['windgustmph']
     let temp = currentWx['temp1f']
 
-    if (snowfallAmt > 25) 
+    if (snowfallAmt > 50) 
         return 'Heavy Snow'
     if (snowfallAmt > 5) 
         return 'Snow'
