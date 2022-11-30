@@ -30,7 +30,7 @@ function updatePrecipBox(forecastUpdated,conditionsUpdated) {
                     } else {
                         next_precip = MMtoIN( forecast[idx+1]['snowfall'] ).toFixed(1) + ' inch '
                         next_timeframe = forecast[idx+1]['time_frame']
-                        percip_next = next_precip + " of snow expected on "+next_timeframe
+                        percip_next = next_precip + " of snow expected "+next_timeframe
 
                         if (forecast[idx+1]['ending'] != null)
                             percip_next = percip_next + " into " + forecast[idx+1]['ending'] + '.'

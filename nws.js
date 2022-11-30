@@ -189,9 +189,9 @@ function getWxLabel(uts,currentWx) {
     let windGust = currentWx['windgustmph']
     let temp = currentWx['temp1f']
 
-    if (snowfallAmt > 50) 
+    if (snowfallAmt > 75) 
         return 'Heavy Snow'
-    if (snowfallAmt > 5) 
+    if (snowfallAmt > 10) 
         return 'Snow'
     if (snowfallAmt > 0) 
         return 'Flurries'
@@ -234,9 +234,9 @@ function getWxIcon(uts_min,uts_max,force_daylight) {
     if (force_daylight == true)
         daylight  = true
 
-    if (snowfallAmt > 25) 
+    if (snowfallAmt > 75) 
         return 'snowheavy.png'
-    if (snowfallAmt > 5) 
+    if (snowfallAmt > 10) 
         return 'snow.png'
     if (pot > 50) {
         if (daylight == false)

@@ -18,9 +18,8 @@ function updateAlertsBox(forecastUpdated,conditionsUpdated) {
         divTable.innerHTML = ''
 
         let alerts = jsonNwsAlerts['features']
-        if (alerts.length < 0) 
+        if (alerts.length == 0) 
             return
-        
 
         let box = document.getElementById("alerts_box");
         box.style.display = 'block'
