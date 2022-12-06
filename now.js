@@ -1,6 +1,5 @@
 
 
-
 function initNowBox() {
     updateNowBox(true,true)
     return
@@ -27,6 +26,7 @@ function updateNowBox(forecastUpdated,conditionsUpdated) {
     }
 
     let now = Date.now()
+    document.querySelector('#background_location').innerHTML = selectedStationJSON.label;
     document.querySelector('#background_current_conditions').innerHTML = getWxLabel(now,wx);
     return
 }

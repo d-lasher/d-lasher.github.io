@@ -15,7 +15,9 @@ function initHourlyBox() {
 
 function updateHourlyBox(forecastUpdated,conditionsUpdated) {
     if (forecastUpdated == true) {
-        let now = Date.now()
+        const date = new Date()        
+        now = convertTZ(date,selectedStationJSON.tz)
+
         let divTable = document.getElementById("hourly_table_child");
         divTable.innerHTML = ''
         for (dHR=0; dHR< 24; dHR++) {
@@ -25,11 +27,7 @@ function updateHourlyBox(forecastUpdated,conditionsUpdated) {
             template = template.replace("{$time}",hourlyWX['slug'])
             
             let temp = CtoF(hourlyWX['temp']) + '&#176;' 
-//            temp = (hourlyWX['temp'].toFixed(2)) + '&#176;' 
             template = template.replace("{$temp}",temp)
-
-//            let gusts = KmToM(hourlyWX['windgusts']) + "<span style='font-size:20px'>mph</span>" //     
-//            template = template.replace("{$gusts}",gusts)
 
             let icon = hourlyWX['icon']    
             template = template.replace("{$icon}",icon)

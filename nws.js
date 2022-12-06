@@ -5,9 +5,6 @@ var jsonGridData = null
 var jsonSunriseSunset = null
 var jsonNwsAlerts = null
 
-var my_lat = '39.9227'
-var my_long = '-105.4049'
-
 function KmToM(km) {
     let m = parseInt( km / 1.609 )
     return m
@@ -37,9 +34,13 @@ function hasForecastData() {
     return true
 }
 
-async function fetchNwsForecast(id) {
+function clearNwsLocation() {
+    jsonLocation = null
+}
+
+async function fetchNwsForecast(lat,lng) {
     if (jsonLocation == null) {
-        jsonLocation = await fetchNwsLocationJSON(id);
+        jsonLocation = await fetchNwsLocationJSON(lat,lng);
         if ((jsonLocation == null) || (jsonLocation.hasOwnProperty('properties') == false)) 
             return false
     }
@@ -47,8 +48,8 @@ async function fetchNwsForecast(id) {
     location_properties = jsonLocation['properties']
     jsonDailyForecast = await fetchNwsWsJSON( location_properties['forecast'] )
     jsonGridData = await fetchNwsWsJSON( location_properties['forecastGridData'] )
-    jsonNwsAlerts = await fetchNwsAlertsJSON()
-    jsonSunriseSunset = await fetchSunriseSunset()
+    jsonNwsAlerts = await fetchNwsAlertsJSON(lat,lng)
+    jsonSunriseSunset = await fetchSunriseSunset(lat,lng)
 
     console.log(jsonLocation)
     console.log(jsonDailyForecast)
@@ -358,9 +359,9 @@ function getShortForecast(forecast)
     return forecast
 }
 
-async function fetchSunriseSunset() {
+async function fetchSunriseSunset(lat,lng) {
     let wx_url = 'https://api.sunrise-sunset.org/json?formatted=0&'
-    let wx_points = 'lat='+my_lat+'&lng='+my_long
+    let wx_points = 'lat='+lat+'&lng='+lng
     let url = wx_url + wx_points
 
     console.log(url)
@@ -393,9 +394,9 @@ async function fetchNwsWsJSON(wx_url) {
     return null
 }
 
-async function fetchNwsLocationJSON(id) {
+async function fetchNwsLocationJSON(lat,lng) {
     let wx_url = 'https://api.weather.gov/points/'
-    let wx_points = my_lat + ',' + my_long
+    let wx_points = lat + ',' + lng
     let url = wx_url + wx_points
 
     console.log(url)
@@ -412,9 +413,9 @@ async function fetchNwsLocationJSON(id) {
     return null
 }
 
-async function fetchNwsAlertsJSON(id) {
+async function fetchNwsAlertsJSON(lat,lng) {
     let wx_url = 'https://api.weather.gov/alerts/active?point='
-    let wx_points = my_lat + ',' + my_long
+    let wx_points = lat + ',' + lng
     let url = wx_url + wx_points
 
     console.log(url)

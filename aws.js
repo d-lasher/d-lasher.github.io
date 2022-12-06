@@ -1,6 +1,7 @@
 
 
 var jsonCurrentWx = null
+var jsonStationList = null
 
 function getCurrentWx() {
     if (jsonCurrentWx == null)
@@ -9,13 +10,13 @@ function getCurrentWx() {
 }
 
 async function fetchCurrentWx(id) {
-    let wx_url = 'https://efd6n53bol.execute-api.us-west-1.amazonaws.com/wx'
+    let wx_url = 'https://' + AwsServer + '/wx/' + id
     try {
         let res = await fetch(wx_url);
         if (res.ok == false) 
             return null
 
-    jsonCurrentWx = await res.json()
+        jsonCurrentWx = await res.json()
         return  jsonCurrentWx;
     } catch (error) {
         console.log("error")
@@ -23,4 +24,22 @@ async function fetchCurrentWx(id) {
     }
 
     return null
+}
+
+async function fetchStations() {
+    let wx_url = 'https://' + AwsServer + '/stations'
+    try {
+        let res = await fetch(wx_url);
+        if (res.ok == false) 
+            return null
+
+        jsonStationList = await res.json()
+        return  jsonStationList;
+    } catch (error) {
+        console.log("error")
+        console.log(error);
+    }
+
+    return null
+
 }

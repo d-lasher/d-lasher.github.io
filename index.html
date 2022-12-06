@@ -23,6 +23,7 @@
         <link rel="stylesheet" href="main.css">
         <link rel="stylesheet" href="background.css">
 
+        <link rel="stylesheet" href="stations.css">
         <link rel="stylesheet" href="hourly.css">
         <link rel="stylesheet" href="daily.css">
         <link rel="stylesheet" href="sun.css">
@@ -32,10 +33,12 @@
         <link rel="stylesheet" href="precip.css">
         <link rel="stylesheet" href="alerts.css">
 
+        <script src="config.js"></script>
         <script src="aws.js"></script>
         <script src="nws.js"></script>
         <script src="horzdrag.js"></script>
 
+        <script src="stations.js"></script>
         <script src="hourly.js"></script>
         <script src="daily.js"></script>
         <script src="sun.js"></script>
@@ -49,8 +52,20 @@
     </head>
     
     <body onload="loadBodyElements()">
+    <div id='stations_nav'>
+        <div id='stations_dot_list'>
+            <span class='stations_dot' id="stations_dot_0"></span>
+        </div>
+        <img id="stations_nav_list_btn" src="/icons/list.png" onclick="showStationsList()"/>
+    </div>
+
     <div id="viewport" style="transform-origin: left top">
-        <h1 id='background_location'>Mountain Home</h1>
+
+    <div id="station_viewport">   
+    </div>
+        
+    <div id="wx_viewport" style="display:none">
+        <h1 id='background_location'></h1>
         <h1 class='background_temp'> <span id='temp1f'></span></h1>
         <h1 class='background_current_conditions'><span id='background_current_conditions'> </span></h1>
              
@@ -143,5 +158,7 @@
         </div>
 
     </div>
+    </div>
+
     </body>
 </html>

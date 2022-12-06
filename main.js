@@ -18,12 +18,16 @@ function onBodySize() {
     return
 }
 
-
 async function loadBodyElements() {
     onBodySize()
     window.addEventListener('resize', onBodySize , true);
 
+    initStationsList()
+}
+
+async function loadStationWx() {
     await fetchData()
+    document.getElementById("wx_viewport").style.display = "inline"
 
     initHourlyBox()
     initNowBox()
@@ -33,14 +37,13 @@ async function loadBodyElements() {
     initInsideBox()
     initPrecipBox()
     initAlertsBox()
-
     return
 }
 
 async function updateCurrentWx() {
     console.log("Update Conditions")
 
-    res = await fetchCurrentWx(1)
+    res = await fetchCurrentWx(selectedStationJSON.id)
     if (res == null) {
         setTimeout(updateCurrentWx, (5  * 1000));
         return
@@ -65,7 +68,9 @@ async function updateCurrentWx() {
 async function updateForecastWx() {
     console.log("Update Forecast")
 
-    await fetchNwsForecast(1)
+    let lat = selectedStationJSON.latitude
+    let lng = selectedStationJSON.longitude
+    await fetchNwsForecast(lat,lng)
     if (hasForecastData() == false) {
         setTimeout(updateForecastWx, (5  * 1000));
         return
@@ -90,9 +95,13 @@ async function updateForecastWx() {
     return
 }
 
-async function fetchData() {
-    await fetchCurrentWx(1)
-    await fetchNwsForecast(1)
+async function fetchData(id) {
+    let aws_station_id = selectedStationJSON.id
+    let lat = selectedStationJSON.latitude
+    let lng = selectedStationJSON.longitude
+
+    await fetchCurrentWx(aws_station_id)
+    await fetchNwsForecast(lat,lng)
 
     //  We refetch the current wx every 30 seconds and refetch the
     setInterval(updateCurrentWx, (45  * 1000));
@@ -152,4 +161,13 @@ function GetMidnight() {
     let hrs = 23 - d.getHours();
     let midnight = now + (((hrs * 60 * 60) + (minutes * 60) + 60) * 1000)
     return midnight
+}
+
+function convertTZ(date, tzString) {
+    console.log(tzString)
+    console.log(date)
+    r = new Date((typeof date === "string" ? new Date(date) : date).toLocaleString("en-US", {timeZone: tzString}));   
+
+    console.log(r)
+    return r
 }
