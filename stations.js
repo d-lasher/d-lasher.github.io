@@ -9,13 +9,17 @@ async function initStationsList() {
     }
     console.log(jsonStationList)
 
-    showStationsList()
+    buildStationsFooter()
+
+    last_selection = getCookie('station')
+    if ((last_selection != null) && 
+        (last_selection >= 0) && (last_selection < jsonStationList.Items.length))
+        await selectStation(last_selection);
+    else
+        showStationsList()
 }
 
-function showStationsList() {
-    let divTable = document.getElementById("station_viewport");
-    divTable.innerHTML = ''
-
+function buildStationsFooter() {
     let divDots = document.getElementById("stations_dot_list");
     divDots.innerHTML = ''
     
@@ -24,6 +28,22 @@ function showStationsList() {
         wx = jsonStationList.Items[i].wx
         console.log(station)
         console.log(wx)
+
+        let template = "<span class='stations_dot' id='stations_dot_{$idx}' onclick='selectStation({$idx_1})'></span>"
+        template = template.replace("{$idx}",i) 
+        template = template.replace("{$idx_1}",i) 
+        ele = htmlToElement(template);
+        divDots.appendChild(ele);
+    }
+}
+
+function showStationsList() {
+    let divTable = document.getElementById("station_viewport");
+    divTable.innerHTML = ''
+    
+    for (i=0; i<jsonStationList.Items.length; i++) {
+        station = jsonStationList.Items[i].station
+        wx = jsonStationList.Items[i].wx
 
         template = getStationTemplate()
         template = template.replace("{$label}",station['label'])
@@ -45,20 +65,18 @@ function showStationsList() {
 
         let ele = htmlToElement(template);
         divTable.appendChild(ele);
-
-        template = "<span class='stations_dot' id='stations_dot_{$idx}' onclick='selectStation({$idx_1})'></span>"
-        template = template.replace("{$idx}",i) 
-        template = template.replace("{$idx_1}",i) 
-        ele = htmlToElement(template);
-        divDots.appendChild(ele);
     }
 
+    setCookie('station',-1,14)
     document.getElementById("station_viewport").style.display = "inline"
     document.getElementById("wx_viewport").style.display = "none"
 }
 
 
 async function selectStation(idx) {
+    console.log("Station List")
+    console.log(jsonStationList)
+
     selectedStationJSON = jsonStationList.Items[idx].station
     console.log(selectedStationJSON)
 
@@ -70,6 +88,7 @@ async function selectStation(idx) {
         document.getElementById(id).style.backgroundColor  = color
     }
 
+    setCookie('station',idx,14)
     document.getElementById("station_viewport").style.display = "none"
     clearNwsLocation()
     await loadStationWx()

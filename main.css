@@ -2,6 +2,9 @@ body {
     background-color: rgb(67, 156, 239);
     font-family: Open Sans, arial, sans-serif;
     margin:0px;
+    -webkit-user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
   }
 
   h1 {

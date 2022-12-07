@@ -1,0 +1,53 @@
+{
+    "short_name": "My Wx",
+    "name": "My Weather",
+    "display": "standalone",
+    "icons": [
+      {
+        "src": "/icons/icons8-rain-cloud-72.png",
+        "sizes": "72x72",
+        "type": "image/png",
+        "density": "1.5"
+      },
+      {
+       "src": "/icons/icons8-rain-cloud-96.png",
+       "sizes": "96x96",
+       "type": "image/png",
+       "density": "2.0"
+      },
+      {
+       "src": "/icons/icons8-rain-cloud-144.png",
+       "sizes": "144x144",
+       "type": "image/png",
+       "density": "2.0"
+      }
+    ],
+
+    "id": "/?source=pwa",
+    "start_url": "/?source=pwa",
+    "background_color": "#439CEF",
+    "orientation": "portrait",
+    "scope": "/",
+    "theme_color": "#439CEF",
+    "description": "Current Wx",
+    "screenshots": [
+       {
+            "src": "/icons/splash-2560x3840.jpg",
+            "type": "image/jpg",
+            "sizes": "2560x3840",
+            "form_factor": "narrow"
+      },
+      {
+        "src": "/icons/splash-540x720.jpg",
+        "type": "image/jpg",
+        "sizes": "540x720",
+        "form_factor": "narrow"
+      },
+      {
+        "src": "/icons/splash-720x540.jpg",
+        "type": "image/jpg",
+        "sizes": "720x540",
+        "form_factor": "wide"
+      }
+    ]
+  }

@@ -29,7 +29,8 @@ function AngletoSLug(angle) {
 }
 
 function hasForecastData() {
-    if ((jsonDailyForecast == null) || (jsonGridData == null) || (jsonSunriseSunset == null)) 
+    if ((jsonDailyForecast == null) || (jsonGridData == null) || 
+        (jsonSunriseSunset == null) || (jsonNwsAlerts == null)) 
         return false
     return true
 }
@@ -93,15 +94,15 @@ function getUnits(property) {
 
 function getSunrise() {
     utsSunrise = Date.parse( jsonSunriseSunset['results']['sunrise'])
-    
-    str = new Date(utsSunrise).toLocaleTimeString()
+
+    str = new Date(utsSunrise).toLocaleTimeString("en-US", {timeZone: selectedStationJSON.tz})
     loc = str.lastIndexOf(':')
     return str.slice(0,loc)
 }
 function getSunset() {
     utsSunset = Date.parse( jsonSunriseSunset['results']['sunset'])
-    
-    str = new Date(utsSunset).toLocaleTimeString()
+
+    str = new Date(utsSunset).toLocaleTimeString("en-US", {timeZone: selectedStationJSON.tz})
     loc = str.lastIndexOf(':')
     return str.slice(0,loc)
 }

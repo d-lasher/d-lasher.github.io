@@ -26,7 +26,12 @@ async function loadBodyElements() {
 }
 
 async function loadStationWx() {
-    await fetchData()
+    let res = await fetchData()
+    if (res == false) {
+        console.log("FETCH INITIAL WX FAILED, retry in 0.5 seconds")
+        setTimeout(loadStationWx, (0.5  * 1000));
+        return
+    }
     document.getElementById("wx_viewport").style.display = "inline"
 
     initHourlyBox()
@@ -45,7 +50,8 @@ async function updateCurrentWx() {
 
     res = await fetchCurrentWx(selectedStationJSON.id)
     if (res == null) {
-        setTimeout(updateCurrentWx, (5  * 1000));
+        console.log("FETCH CURRENT WX FAILED, retry in 0.5 seconds")
+        setTimeout(updateCurrentWx, (0.5  * 1000));
         return
     }
     if (hasForecastData() == false) {
@@ -72,7 +78,8 @@ async function updateForecastWx() {
     let lng = selectedStationJSON.longitude
     await fetchNwsForecast(lat,lng)
     if (hasForecastData() == false) {
-        setTimeout(updateForecastWx, (5  * 1000));
+        console.log("FETCH FORECAST WX FAILED, retry in 0.5 seconds")
+        setTimeout(updateForecastWx, (0.5  * 1000));
         return
     }
 
@@ -100,8 +107,13 @@ async function fetchData(id) {
     let lat = selectedStationJSON.latitude
     let lng = selectedStationJSON.longitude
 
-    await fetchCurrentWx(aws_station_id)
-    await fetchNwsForecast(lat,lng)
+    let res = await fetchCurrentWx(aws_station_id)
+    if (res == null) 
+        return false
+    
+    res = await fetchNwsForecast(lat,lng)
+    if (res == false)
+        return false
 
     //  We refetch the current wx every 30 seconds and refetch the
     setInterval(updateCurrentWx, (45  * 1000));
@@ -114,7 +126,7 @@ async function fetchData(id) {
     console.log("Update forecast in " + (delta * 60) + " seconds")
     setTimeout(updateForecastWx, (delta * 60  * 1000));
 
-    return
+    return true
 }
 
 
@@ -164,10 +176,31 @@ function GetMidnight() {
 }
 
 function convertTZ(date, tzString) {
-    console.log(tzString)
-    console.log(date)
-    r = new Date((typeof date === "string" ? new Date(date) : date).toLocaleString("en-US", {timeZone: tzString}));   
-
-    console.log(r)
+    r = new Date((date).toLocaleString("en-US", {timeZone: tzString}));   
     return r
+}
+
+function setCookie(name,value,days) {
+    var expires = "";
+    if (days) {
+        var date = new Date();
+        date.setTime(date.getTime() + (days*24*60*60*1000));
+        expires = "; expires=" + date.toUTCString();
+    }
+    document.cookie = name + "=" + (value || "")  + expires + "; path=/";
+}
+
+function getCookie(name) {
+    var nameEQ = name + "=";
+    var ca = document.cookie.split(';');
+    for(var i=0;i < ca.length;i++) {
+        var c = ca[i];
+        while (c.charAt(0)==' ') c = c.substring(1,c.length);
+        if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+    }
+    return null;
+}
+
+function eraseCookie(name) {   
+    document.cookie = name +'=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
 }
