@@ -1,7 +1,9 @@
 
 
 //  public functions
-
+var loadStationWx_retry_timeout = null
+var updateCurrentWx_timeout = null
+var updateForecastWx_timeout = null
 
 function onBodySize() {
     let width = document.documentElement.clientWidth;
@@ -18,18 +20,31 @@ function onBodySize() {
     return
 }
 
+function onVisibilityChange() {
+    console.log("onVisibilityChange")
+    if (document.hidden == false) {
+        console.log("onVisibilityChange : updateCurrentWx()")
+        updateCurrentWx();
+    }
+}
+
 async function loadBodyElements() {
     onBodySize()
     window.addEventListener('resize', onBodySize , true);
+    document.addEventListener('visibilitychange', onVisibilityChange);
 
     initStationsList()
 }
 
 async function loadStationWx() {
+    if (loadStationWx_retry_timeout != null)
+        clearTimeout(loadStationWx_retry_timeout)
+    loadStationWx_retry_timeout = null
+
     let res = await fetchData()
     if (res == false) {
         console.log("FETCH INITIAL WX FAILED, retry in 0.5 seconds")
-        setTimeout(loadStationWx, (0.5  * 1000));
+        loadStationWx_retry_timeout = setTimeout(loadStationWx, (0.5  * 1000));
         return
     }
     document.getElementById("wx_viewport").style.display = "inline"
@@ -48,57 +63,80 @@ async function loadStationWx() {
 async function updateCurrentWx() {
     console.log("Update Conditions")
 
-    res = await fetchCurrentWx(selectedStationJSON.id)
-    if (res == null) {
-        console.log("FETCH CURRENT WX FAILED, retry in 0.5 seconds")
-        setTimeout(updateCurrentWx, (0.5  * 1000));
-        return
-    }
-    if (hasForecastData() == false) {
-        setTimeout(updateForecastWx, (5  * 1000));
+    if (updateCurrentWx_timeout != null)
+        clearTimeout(updateCurrentWx_timeout)
+    updateCurrentWx_timeout = null
+    
+    if (document.hidden == true) {
+        console.log("updateCurrentWx : window not visible")
         return
     }
 
-    updateHourlyBox(false,true)
-    updateNowBox(false,true)
-    updateDailyBox(false,true)
-    updateSunBox(false,true)
-    updateWindBox(false,true)
-    updateInsideBox(false,true)   
-    updatePrecipBox(false,true) 
-    updateAlertsBox(false,true)
+    try {
+        res = await fetchCurrentWx(selectedStationJSON.id)
+        if (res == null) {
+            console.log("FETCH CURRENT WX FAILED, retry in 0.5 seconds")
+            updateCurrentWx_timeout = setTimeout(updateCurrentWx, (0.5  * 1000));
+            return
+        }
+        if (hasForecastData() == false) {
+            updateCurrentWx_timeout = setTimeout(updateCurrentWx, (5  * 1000));
+            return
+        }
 
+        updateHourlyBox(false,true)
+        updateNowBox(false,true)
+        updateDailyBox(false,true)
+        updateSunBox(false,true)
+        updateWindBox(false,true)
+        updateInsideBox(false,true)   
+        updatePrecipBox(false,true) 
+        updateAlertsBox(false,true)
+    }
+    catch {
+        console.log("updateCurrentWx error")
+    }
+
+    updateCurrentWx_timeout = setTimeout(updateCurrentWx, (45  * 1000));
     return
 }
 
 async function updateForecastWx() {
     console.log("Update Forecast")
 
+    if (updateForecastWx_timeout != null)
+        clearTimeout(updateForecastWx_timeout)
+    updateForecastWx_timeout = null
+
     let lat = selectedStationJSON.latitude
     let lng = selectedStationJSON.longitude
     await fetchNwsForecast(lat,lng)
     if (hasForecastData() == false) {
         console.log("FETCH FORECAST WX FAILED, retry in 0.5 seconds")
-        setTimeout(updateForecastWx, (0.5  * 1000));
+        updateForecastWx_timeout = setTimeout(updateForecastWx, (0.5  * 1000));
         return
     }
 
-    updateHourlyBox(true,false)
-    updateNowBox(true,false)
-    updateDailyBox(true,false)
-    updateSunBox(true,false)
-    updateWindBox(true,false)
-    updateInsideBox(true,false)
-    updatePrecipBox(true,false)
-    updateAlertsBox(true,false)
-
+    try {
+        updateHourlyBox(true,false)
+        updateNowBox(true,false)
+        updateDailyBox(true,false)
+        updateSunBox(true,false)
+        updateWindBox(true,false)
+        updateInsideBox(true,false)
+        updatePrecipBox(true,false)
+        updateAlertsBox(true,false)
+    }
+    catch {
+        console.log("updateForecastWx error")
+    }
     //  forecast data 1 minute after the top of the hour
     const d = new Date();
     let minutes = d.getMinutes();
     let delta = 61 - minutes
 
     console.log("Update forecast in " + (delta * 60) + " seconds")
-    setTimeout(updateForecastWx, (delta * 60  * 1000));
+    updateForecastWx_timeout = setTimeout(updateForecastWx, (delta * 60  * 1000));
     return
 }
 
@@ -116,7 +154,9 @@ async function fetchData(id) {
         return false
 
     //  We refetch the current wx every 30 seconds and refetch the
-    setInterval(updateCurrentWx, (45  * 1000));
+    if (updateCurrentWx_timeout != null)
+        clearTimeout(updateCurrentWx_timeout)
+    updateCurrentWx_timeout = setTimeout(updateCurrentWx, (45  * 1000));
 
     //  forecast data 1 minute after the top of the hour
     const d = new Date();
@@ -124,7 +164,9 @@ async function fetchData(id) {
     let delta = 61 - minutes
 
     console.log("Update forecast in " + (delta * 60) + " seconds")
-    setTimeout(updateForecastWx, (delta * 60  * 1000));
+    if (updateForecastWx_timeout != null)
+        clearTimeout(updateForecastWx_timeout)
+    updateForecastWx_timeout = setTimeout(updateForecastWx, (delta * 60  * 1000));
 
     return true
 }

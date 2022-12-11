@@ -68,14 +68,16 @@ function nwsTimeToUTS(nwsTimeString) {
 
 function getDailySlug(uts) {
     let date = new Date(uts);
-    let day = date.getDay() 
+    let local_date = convertTZ(date,selectedStationJSON.tz )
+    let day = local_date.getDay() 
     const slug = ['Sun','Mon','Tue','Wed','Thr','Fri','Sat']
     return slug[day]    
 }
 
 function getHourlySlug(uts){
     let date = new Date(uts);
-    let hr = date.getHours() 
+    let local_date = convertTZ(date,selectedStationJSON.tz )
+    let hr = local_date.getHours() 
 
     if (hr == 0)
         return "12AM"
@@ -99,6 +101,7 @@ function getSunrise() {
     loc = str.lastIndexOf(':')
     return str.slice(0,loc)
 }
+
 function getSunset() {
     utsSunset = Date.parse( jsonSunriseSunset['results']['sunset'])
 
@@ -351,12 +354,10 @@ function getTodaysWx() {
 
 function getShortForecast(forecast) 
 {
-    console.log('shorten : ' + forecast)
-    idx = forecast.indexOf('then')
+    let idx = forecast.indexOf('then')
     if (idx > -1) {
         forecast = forecast.slice(0,idx)
     }
-
     return forecast
 }
 

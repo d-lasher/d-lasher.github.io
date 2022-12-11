@@ -15,8 +15,7 @@ function initHourlyBox() {
 
 function updateHourlyBox(forecastUpdated,conditionsUpdated) {
     if (forecastUpdated == true) {
-        const date = new Date()        
-        now = convertTZ(date,selectedStationJSON.tz)
+        const now = new Date()        
 
         let divTable = document.getElementById("hourly_table_child");
         divTable.innerHTML = ''
