@@ -14,14 +14,17 @@ function updateAlertsBox(forecastUpdated,conditionsUpdated) {
         if (jsonNwsAlerts == null)
             return
 
+        let box = document.getElementById("alerts_box");
         let divTable = document.getElementById("alerts_table_parent");
         divTable.innerHTML = ''
+        alertsMoreBoxHidden = []
 
         let alerts = jsonNwsAlerts['features']
-        if (alerts.length == 0) 
+        if (alerts.length == 0) {
+            box.style.display = 'none'
             return
+        }
 
-        let box = document.getElementById("alerts_box");
         box.style.display = 'block'
         alertsMoreBoxHidden = new Array(alerts.length)
 

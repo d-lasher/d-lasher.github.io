@@ -1,10 +1,10 @@
 
-function initPrecipBox() {
-    updatePrecipBox(true,true)
+function initStormBox() {
+    updateStormBox(true,true)
     return
 }
 
-function updatePrecipBox(forecastUpdated,conditionsUpdated) {
+function updateStormBox(forecastUpdated,conditionsUpdated) {
     if (forecastUpdated == true) {
         let wx = getCurrentWx()
         let label = "Storm Forecast"
@@ -41,10 +41,10 @@ function updatePrecipBox(forecastUpdated,conditionsUpdated) {
             }
         }
 
-        document.querySelector('#precip_label').innerHTML = label;
-        document.querySelector('#precip_day_label').innerHTML = description;
-        document.querySelector('#precip_value').innerHTML = total_precip;
-        document.querySelector('#precip_next').innerHTML = percip_next;
+        document.querySelector('#storm_label').innerHTML = label;
+        document.querySelector('#storm_day_label').innerHTML = description;
+        document.querySelector('#storm_value').innerHTML = total_precip;
+        document.querySelector('#storm_next').innerHTML = percip_next;
     }
     return
 }

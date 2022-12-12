@@ -55,15 +55,15 @@ async function loadStationWx() {
     initSunBox()
     initWindBox()
     initInsideBox()
-    initPrecipBox()
+    initStormBox()
     initAlertsBox()
+    initRainBox()
     return
 }
 
 async function updateCurrentWx() {
     console.log("Update Conditions")
-    return
-    
+
     if (updateCurrentWx_timeout != null)
         clearTimeout(updateCurrentWx_timeout)
     updateCurrentWx_timeout = null
@@ -91,8 +91,9 @@ async function updateCurrentWx() {
         updateSunBox(false,true)
         updateWindBox(false,true)
         updateInsideBox(false,true)   
-        updatePrecipBox(false,true) 
+        updateStormBox(false,true) 
         updateAlertsBox(false,true)
+        updateRainBox(false,true)
     }
     catch {
         console.log("updateCurrentWx error")
@@ -125,8 +126,9 @@ async function updateForecastWx() {
         updateSunBox(true,false)
         updateWindBox(true,false)
         updateInsideBox(true,false)
-        updatePrecipBox(true,false)
+        updateStormBox(true,false)
         updateAlertsBox(true,false)
+        updateRainBox(true,false)
     }
     catch {
         console.log("updateForecastWx error")

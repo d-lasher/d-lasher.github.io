@@ -35,3 +35,11 @@ body {
     color: rgb(108, 180, 248);
     text-align: left;
 }
+
+#boxes {
+    position:absolute; 
+    left:25px; 
+    width:920px; 
+    padding-bottom:200px; 
+    overflow:hidden;
+}

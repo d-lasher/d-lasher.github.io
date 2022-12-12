@@ -6,10 +6,11 @@
     background-color: rgb(53, 114, 172);
     margin-top:0px;
     margin-bottom:10px;
-    margin-left:20px;
+    margin-left:10px;
     margin-right:10px;
     width: 440px;
     height: 440px; 
+
     color: rgb(236, 243, 243);
     font-size: 28px;
     font-weight: 600;  
@@ -19,13 +20,13 @@
 #sun_value {
     position: absolute;
     top:50px;
-    left:30px;
+    left:100px;
     width: 60%;
     height: 60px;
     color: rgb(236, 243, 243);
     font-size: 60px;
     font-weight: 600;
-    text-align: center;
+    text-align: left;
 }
 #sun_next {
     position: absolute;

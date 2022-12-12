@@ -46,8 +46,10 @@
         <link rel="stylesheet" href="now.css">
         <link rel="stylesheet" href="wind.css">
         <link rel="stylesheet" href="inside.css">
-        <link rel="stylesheet" href="precip.css">
+        <link rel="stylesheet" href="storm.css">
         <link rel="stylesheet" href="alerts.css">
+        <link rel="stylesheet" href="rain.css">
+        <link rel="stylesheet" href="nws_box.css">
 
         <script src="config.js"></script>
         <script src="aws.js"></script>
@@ -61,8 +63,10 @@
         <script src="now.js"></script>
         <script src="wind.js"></script>
         <script src="inside.js"></script>
-        <script src="precip.js"></script>
+        <script src="storm.js"></script>
         <script src="alerts.js"></script>
+        <script src="rain.js"></script>
+        <script src="nws_box.js"></script>
 
         <script src="main.js"></script>
     </head>
@@ -80,11 +84,12 @@
     <div id="station_viewport">   
     </div>
         
-    <div id="wx_viewport" style="display:none">
+    <div id="wx_viewport" style="display:none; left:10px;">
         <h1 id='background_location'></h1>
         <h1 class='background_temp'> <span id='temp1f'></span></h1>
         <h1 class='background_current_conditions'><span id='background_current_conditions'> </span></h1>
              
+        <div id='boxes'>
         <div id='alerts_box'>
             <span class="conditions_label">Alerts, Watchs, and Warnings</span>
             <div id="alerts_table_parent">
@@ -153,11 +158,24 @@
                 <span id="maxdailygust"></span><span id="maxgusttime"></span></p>
         </div>
 
-        <div id='precip_box'>
-            <span id='precip_label' class="conditions_label">Rain</span>
-            <p id="precip_day_label"></p>
-            <p id="precip_value"></p>
-            <p id="precip_next"></p>
+        <div id='storm_box'>
+            <span id='storm_label' class="conditions_label">Storm Forecast</span>
+            <p id="storm_day_label"></p>
+            <p id="storm_value"></p>
+            <p id="storm_next"></p>
+        </div>
+
+        <div id='rain_box'>
+            <span id='rain_label' class="conditions_label">Rainfall</span>
+            <div class="rain_rate"><span id="rainratein">0.0</span><span class="rain_units"> (in/hr)</span></div>
+
+            <div id="rain_data">
+                <div class="rain_line">Last Hour : <span id="rain_hr_value" class="rain_value">0.0<span class="rain_units"> in</span></span></div>
+                <div class="rain_line">Today : <span id="rain_day_value" class="rain_value">0.0<span class="rain_units"> in</span></span></div>
+                <div class="rain_line">This Week : <span id="rain_wk_value" class="rain_value">0.0<span class="rain_units"> in</span></span></div>
+                <div class="rain_line">This Month : <span id="rain_mn_value" class="rain_value">0.0<span class="rain_units"> in</span></span></div>
+                <div class="rain_line">This Year : <span id="rain_yr_value" class="rain_value">0.0<span class="rain_units"> in</span></span></div>
+            </div>
         </div>
 
         <div id='inside_box'>
@@ -174,6 +192,7 @@
             <span id="sun_next">Sunrise :</span><span id="sun_next_value"></span>
         </div>
 
+    </div>
     </div>
     </div>
 
