@@ -11,12 +11,17 @@ function getCurrentWx() {
 
 async function fetchCurrentWx(id) {
     let wx_url = 'https://' + AwsServer + '/wx/' + id
+    console.log(wx_url)
     try {
         let res = await fetch(wx_url);
         if (res.ok == false) 
             return null
 
         jsonCurrentWx = await res.json()
+        
+        console.log('fetchCurrentWx')
+        console.log(jsonCurrentWx)
+
         return  jsonCurrentWx;
     } catch (error) {
         console.log("error")

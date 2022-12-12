@@ -62,7 +62,8 @@ async function loadStationWx() {
 
 async function updateCurrentWx() {
     console.log("Update Conditions")
-
+    return
+    
     if (updateCurrentWx_timeout != null)
         clearTimeout(updateCurrentWx_timeout)
     updateCurrentWx_timeout = null
