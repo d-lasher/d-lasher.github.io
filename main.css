@@ -14,7 +14,7 @@ body {
   }
 
 
-  .forecast_label {
+.forecast_label {
     position: absolute;
     top:10px;
     left:30px;
@@ -36,6 +36,11 @@ body {
     text-align: left;
 }
 
+.hide_scrollbar::-webkit-scrollbar {
+    display: none;
+}
+
+
 #boxes {
     position:absolute; 
     left:25px; 
@@ -43,3 +48,4 @@ body {
     padding-bottom:200px; 
     overflow:hidden;
 }
+

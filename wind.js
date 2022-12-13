@@ -22,11 +22,14 @@ function updateWindBox(forecastUpdated,conditionsUpdated) {
             if ( wx.hasOwnProperty('maxgusttime')) {
                 let date = new Date( parseFloat(wx.maxgusttime) )
                 let local_date = new Date( date.toLocaleString("en-US", {timeZone: selectedStationJSON.tz}) )
-                let hr = (local_date.getHours()<10?'0':'') + local_date.getHours();
                 let min = (local_date.getMinutes()<10?'0':'') + local_date.getMinutes();
+                let hr = local_date.getHours()
                 let m = 'AM'
-                if (local_date.getHours() >= 12)
+                if (hr >= 12)
                     m='PM'
+                if (hr > 12)
+                hr -= 12
+
                 document.querySelector('#maxgusttime').innerHTML = hr + ':' + min + ' ' + "<span style='font-size:20px'>" + m + "</span>";
             } else {
                 document.querySelector('#maxgusttime').innerHTML = ''

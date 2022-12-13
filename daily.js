@@ -3,10 +3,10 @@ var dailyMoreBoxHidden = true
 
 function initDailyBox() {
     if (isIOS() == false) {
-        let parent_div = document.getElementById("daily_table_parent");
-        parent_div.style.overflow = 'hidden';
-        parent_div.style.overflowY = 'hidden';
-        parent_div.style.overflowX = 'hidden';
+//        let parent_div = document.getElementById("daily_table_parent");
+//        parent_div.style.overflow = 'hidden';
+//        parent_div.style.overflowY = 'hidden';
+//        parent_div.style.overflowX = 'hidden';
     } 
 
     updateDailyBox(true,true)
