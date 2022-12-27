@@ -13,6 +13,14 @@ function updateNowBox(forecastUpdated,conditionsUpdated) {
             
         }
     }
+    document.querySelector('#background_location').innerHTML = selectedStationJSON.label;
+
+    let box = document.getElementById("now_box");
+    if (hasForecastError() == true) {
+        box.style.display = 'none'
+        return
+    }
+    box.style.display = 'block'
 
     jsonTodaysForecast = getTodaysWx()
     if (forecastUpdated == true) {
@@ -26,7 +34,6 @@ function updateNowBox(forecastUpdated,conditionsUpdated) {
     }
 
     let now = Date.now()
-    document.querySelector('#background_location').innerHTML = selectedStationJSON.label;
     document.querySelector('#background_current_conditions').innerHTML = getWxLabel(now,wx);
     return
 }

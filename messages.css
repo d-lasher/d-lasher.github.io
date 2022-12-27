@@ -1,0 +1,30 @@
+
+
+#message_box{
+    display: none;
+    position: relative;
+    float:left;
+    border-radius: 25px;
+    color: rgb(236, 243, 243);
+    font-size: 32px; 
+    font-weight: 600;    
+    background-color: rgb(53, 114, 172);
+    margin-top:40px;
+    margin-left:10px;
+    margin-right:50px;
+    margin-bottom:-5px;
+    width: 900px;
+  }
+
+  
+  #message_msg {
+    font-size: 36px; 
+    font-weight: 700;     
+    margin:0px;
+    width: 850px;
+    margin-left:40px;
+    margin-top:60px;
+    margin-bottom:20px;
+    text-align: left;
+  }
+ 

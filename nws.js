@@ -28,6 +28,17 @@ function AngletoSLug(angle) {
     return slug[idx]
 }
 
+function hasForecastError() {
+    if  (hasForecastData() == false)
+        return true
+
+    if  (jsonGridData['status'] == 503)
+        return true
+    if  (jsonDailyForecast['status'] == 503)
+        return true        
+    return false
+}
+
 function hasForecastData() {
     if ((jsonDailyForecast == null) || (jsonGridData == null) || 
         (jsonSunriseSunset == null) || (jsonNwsAlerts == null)) 
@@ -385,10 +396,15 @@ async function fetchNwsWsJSON(wx_url) {
     console.log(wx_url)
     try {
         let res = await fetch(wx_url);
+        if (res.status == 503) {
+            j = await res.json();
+            return j            
+        }
         if (res.ok == false)
             return null
 
-        return await res.json();
+        j = await res.json();
+        return j
     } catch (error) {
         console.log("error")
         console.log(error);

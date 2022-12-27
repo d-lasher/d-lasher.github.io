@@ -14,6 +14,14 @@ function initHourlyBox() {
 }
 
 function updateHourlyBox(forecastUpdated,conditionsUpdated) {
+    let box = document.getElementById("hourly_box");
+
+    if (hasForecastError() == true) {
+        box.style.display = 'none'
+        return
+    }
+    box.style.display = 'block'
+
     if (forecastUpdated == true) {
         const now = new Date()        
 

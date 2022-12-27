@@ -44,11 +44,12 @@ async function loadStationWx() {
     let res = await fetchData()
     if (res == false) {
         console.log("FETCH INITIAL WX FAILED, retry in 0.5 seconds")
-        loadStationWx_retry_timeout = setTimeout(loadStationWx, (0.5  * 1000));
+        loadStationWx_retry_timeout = setTimeout(loadStationWx, (10  * 1000));
         return
     }
     document.getElementById("wx_viewport").style.display = "inline"
 
+    initMessagesBox()
     initHourlyBox()
     initNowBox()
     initDailyBox()
@@ -85,6 +86,7 @@ async function updateCurrentWx() {
             return
         }
 
+        updateMessagesBox(false,true)
         updateHourlyBox(false,true)
         updateNowBox(false,true)
         updateDailyBox(false,true)
@@ -120,6 +122,7 @@ async function updateForecastWx() {
     }
 
     try {
+        updateMessagesBox(false,true)
         updateHourlyBox(true,false)
         updateNowBox(true,false)
         updateDailyBox(true,false)

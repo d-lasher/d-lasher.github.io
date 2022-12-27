@@ -5,6 +5,13 @@ function initStormBox() {
 }
 
 function updateStormBox(forecastUpdated,conditionsUpdated) {
+    let box = document.getElementById("storm_box");
+    if (hasForecastError() == true) {
+        box.style.display = 'none'
+        return
+    }
+    box.style.display = 'block'
+    
     if (forecastUpdated == true) {
         let wx = getCurrentWx()
         let label = "Storm Forecast"

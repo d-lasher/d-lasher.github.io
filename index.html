@@ -50,6 +50,7 @@
         <link rel="stylesheet" href="alerts.css">
         <link rel="stylesheet" href="rain.css">
         <link rel="stylesheet" href="nws_box.css">
+        <link rel="stylesheet" href="messages.css">
 
         <script src="config.js"></script>
         <script src="aws.js"></script>
@@ -57,6 +58,7 @@
         <script src="horzdrag.js"></script>
 
         <script src="stations.js"></script>
+        <script src="messages.js"></script>
         <script src="hourly.js"></script>
         <script src="daily.js"></script>
         <script src="sun.js"></script>
@@ -90,6 +92,11 @@
         <h1 class='background_current_conditions'><span id='background_current_conditions'> </span></h1>
              
         <div id='boxes'>
+        <div id='message_box'>
+            <span class="conditions_label">Messages</span>
+            <div id="message_msg"></div>
+        </div>
+
         <div id='alerts_box'>
             <span class="conditions_label">Alerts, Watchs, and Warnings</span>
             <div id="alerts_table_parent">

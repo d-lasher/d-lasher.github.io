@@ -14,6 +14,13 @@ function initDailyBox() {
 }
 
 function updateDailyBox(forecastUpdated,conditionsUpdated) {
+    let box = document.getElementById("daily_box");
+    if (hasForecastError() == true) {
+        box.style.display = 'none'
+        return
+    }
+    box.style.display = 'block'
+
     if (forecastUpdated == true) {
         let now = Date.now()
         let divTable = document.getElementById("daily_table_child");
