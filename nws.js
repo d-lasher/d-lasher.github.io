@@ -42,9 +42,9 @@ function hasForecastError() {
     if  (hasForecastData() == false)
         return true
 
-    if  (jsonGridData['status'] == 503)
+    if  ((jsonGridData['status'] == 503) || (jsonGridData['status'] == 404))
         return true
-    if  (jsonDailyForecast['status'] == 503)
+    if  ((jsonDailyForecast['status'] == 503) || (jsonDailyForecast['status'] == 404))
         return true        
     return false
 }
@@ -406,7 +406,7 @@ async function fetchNwsWsJSON(wx_url) {
     console.log(wx_url)
     try {
         let res = await fetch(wx_url);
-        if (res.status == 503) {
+        if ((res.status == 503) || (res.status == 404)) {
             j = await res.json();
             return j            
         }
