@@ -28,6 +28,16 @@ function AngletoSLug(angle) {
     return slug[idx]
 }
 
+//  Forecast error return :
+const jsonNWSErrorExample = {
+    "correlationId": "3a7697cf",
+    "title": "Service Unavailable",
+    "type": "https://api.weather.gov/problems/ServiceUnavailable",
+    "status": 503,
+    "detail": "An upstream data source is temporarily unavailable. Please try again later.",
+    "instance": "https://api.weather.gov/requests/3a7697cf"
+}
+
 function hasForecastError() {
     if  (hasForecastData() == false)
         return true

@@ -32,6 +32,12 @@ function updateAlertsBox(forecastUpdated,conditionsUpdated) {
             let alert = alerts[idx]['properties']
             let template = getAlertTemplate()
 
+            let expires = alert['expires']
+            let time_expires = new Date(expires)
+            let now = new Date()
+            if (time_expires < now)
+                continue
+            
             template = template.replace("{$idx}",idx)
             template = template.replace("{$idx_}",idx)
             template = template.replace("{$idx__}",idx)
