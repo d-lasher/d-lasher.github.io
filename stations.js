@@ -47,7 +47,12 @@ function showStationsList() {
 
         template = getStationTemplate()
         template = template.replace("{$label}",station['label'])
-        template = template.replace("{$temp}",parseInt(wx['temp1f']))
+        
+        if (wx.hasOwnProperty('temp1f'))
+            template = template.replace("{$temp}",parseInt(wx['temp1f']))
+        else if (wx.hasOwnProperty('tempf'))
+            template = template.replace("{$temp}",parseInt(wx['tempf']))
+
 
         const date = new Date()
         convertedDate  = convertTZ(date, station['tz']) // current date-time in jakarta.
