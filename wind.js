@@ -9,9 +9,6 @@ function updateWindBox(forecastUpdated,conditionsUpdated) {
     if (conditionsUpdated == true) {
         let wx = getCurrentWx()
         if (wx != null) {
-            console.log('wind')
-            console.log(wx)
-    //        document.querySelector('#windspeedmph').innerHTML = parseInt(wx.windspeedmph);
             document.querySelector('#windspeedmph').innerHTML = parseInt(wx.windgustmph);
             winddir = parseInt(wx.winddir) + 90
             rotate = "rotate("+winddir+"deg)"

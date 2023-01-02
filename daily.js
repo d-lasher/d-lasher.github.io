@@ -25,7 +25,7 @@ function updateDailyBox(forecastUpdated,conditionsUpdated) {
         let now = Date.now()
         let divTable = document.getElementById("daily_table_child");
         divTable.innerHTML = ''
-        for (dDay=0; dDay<8; dDay++) {
+        for (let dDay=0; dDay<8; dDay++) {
             dailyWX = getDailyWx(now,dDay)
     
             let template = getDailyTemplate()
@@ -71,7 +71,7 @@ function updateMoreDailyBox() {
     let divTable = document.getElementById("daily_more_table_child");
     divTable.innerHTML = ''
 
-    for (dDay=0; dDay<8; dDay++) {
+    for (let dDay=0; dDay<8; dDay++) {
         dailyWX = getDailyWx(now,dDay)
 
         let template = getMoreDailyTemplate()

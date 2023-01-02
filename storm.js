@@ -92,7 +92,6 @@ function getSnowForecast() {
         min = max
         max += (24 * 60 * 60) * 1000
     }
-
-    console.log(expectations)
+    
     return expectations
 }

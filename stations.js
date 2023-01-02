@@ -23,7 +23,7 @@ function buildStationsFooter() {
     let divDots = document.getElementById("stations_dot_list");
     divDots.innerHTML = ''
     
-    for (i=0; i<jsonStationList.Items.length; i++) {
+    for (let i=0; i<jsonStationList.Items.length; i++) {
         station = jsonStationList.Items[i].station
         wx = jsonStationList.Items[i].wx
         console.log(station)
@@ -41,7 +41,7 @@ function showStationsList() {
     let divTable = document.getElementById("station_viewport");
     divTable.innerHTML = ''
     
-    for (i=0; i<jsonStationList.Items.length; i++) {
+    for (let i=0; i<jsonStationList.Items.length; i++) {
         station = jsonStationList.Items[i].station
         wx = jsonStationList.Items[i].wx
 
@@ -85,7 +85,7 @@ async function selectStation(idx) {
     selectedStationJSON = jsonStationList.Items[idx].station
     console.log(selectedStationJSON)
 
-    for (i=0; i<jsonStationList.Items.length; i++) {
+    for (let i=0; i<jsonStationList.Items.length; i++) {
         color = "#bbb"
         if (i == idx)
             color = "#fff"

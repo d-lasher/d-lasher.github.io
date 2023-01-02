@@ -28,7 +28,7 @@ function updateAlertsBox(forecastUpdated,conditionsUpdated) {
         box.style.display = 'block'
         alertsMoreBoxHidden = new Array(alerts.length)
 
-        for (idx=0; idx<alerts.length; idx++) {
+        for (let idx=0; idx<alerts.length; idx++) {
             let alert = alerts[idx]['properties']
             let template = getAlertTemplate()
 

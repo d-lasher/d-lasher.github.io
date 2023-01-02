@@ -27,7 +27,7 @@ function updateHourlyBox(forecastUpdated,conditionsUpdated) {
 
         let divTable = document.getElementById("hourly_table_child");
         divTable.innerHTML = ''
-        for (dHR=0; dHR< 24; dHR++) {
+        for (let dHR=0; dHR< 24; dHR++) {
             hourlyWX = getHourlyWx(now,dHR)
 
             let template = getHourlyTemplate()
@@ -56,7 +56,7 @@ function updateMoreHourlyBox() {
 
     let total_snow_amnt = 0.0
     let total_rain_amnt = 0.0
-    for (dHR=0; dHR< 24; dHR++) {
+    for (let dHR=0; dHR< 24; dHR++) {
         hourlyWX = getHourlyWx(now,dHR)
 
         let template = getMoreHourlyTemplate()

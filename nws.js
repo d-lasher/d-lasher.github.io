@@ -162,7 +162,7 @@ function sumHourlyData(min,max,property) {
     let dataset = properties[property]["values"]
     let total = 0.0
 
-    for (idx=0; idx<dataset.length; idx++) {
+    for (let idx=0; idx<dataset.length; idx++) {
         let valid_time = nwsTimeToUTS(dataset[idx]['validTime'])
         if ((valid_time > min) && (valid_time <= max)) 
             total += dataset[idx]["value"]
@@ -179,7 +179,7 @@ function maxHourlyData(min,max,property) {
     let dataset = properties[property]["values"]
     let max_value = -1e6
 
-    for (idx=0; idx<dataset.length; idx++) {
+    for (let idx=0; idx<dataset.length; idx++) {
         let valid_time = nwsTimeToUTS(dataset[idx]['validTime'])
         if ((valid_time > min) && (valid_time <= max))
             if (dataset[idx]["value"] > max_value)
@@ -195,7 +195,7 @@ function getHourlyData(uts,property) {
     dataset = properties[property]["values"]
 
     value = NaN
-    for (idx=0; idx<dataset.length; idx++) {
+    for (let idx=0; idx<dataset.length; idx++) {
         valid_time = nwsTimeToUTS(dataset[idx]['validTime'])
         if (valid_time > uts)
             break
