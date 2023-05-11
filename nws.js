@@ -213,7 +213,7 @@ function getWxLabel(uts,currentWx) {
     let daylight = isDaylight(uts)
 
     let windGust = currentWx['windgustmph']
-    let temp = currentWx['temp1f']
+    let temp = getOutsideTemp(wx)
 
     if (snowfallAmt > 75) 
         return 'Heavy Snow'
@@ -228,20 +228,28 @@ function getWxLabel(uts,currentWx) {
     if (currentWx.hasOwnProperty("rainratein")) {
 //  We have a rain gauge
         if (parseFloat(currentWx.rainratein) > 0) {
-    //  The rain gauge is picking up rain...
+//  The rain gauge is picking up rain...
+            if ((temp > 31) && (temp < 36)) 
+                return 'Snow and Rain'
             if (windGust > 31) 
                 return 'Wind and Rain'
             if (parseFloat(currentWx.rainratein) > 0.25)
                 return 'Heavy Rain'
             return 'Raining'
         }
-    } else {
+    } 
+
  //  We don't have a rain gauge      
-        if ((pop > 33) && (temp > 36)){
+    if (pop > 33)  {
+        if (temp > 36) {
             if (windGust > 31) 
                 return 'Stormy'
             return 'Rain'
         }
+        if (temp > 31)
+            return 'Rain and Snow'
+        else
+            return 'Chance of Snow'
     }
 
     if (visibility < 1600)

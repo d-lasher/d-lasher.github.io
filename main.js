@@ -201,6 +201,14 @@ function getWidth() {
   || (navigator.userAgent.includes("Mac") && "ontouchend" in document)
 }
 
+function getOutsideTemp(wx) {
+    if (wx.hasOwnProperty('temp1f'))
+        return parseInt(wx.temp1f);
+    else if (wx.hasOwnProperty('tempf'))
+        return parseInt(wx.tempf);
+
+    return '---'
+}
 
 function htmlToElement(html) {
     var template = document.createElement('template');

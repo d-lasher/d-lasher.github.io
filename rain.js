@@ -11,7 +11,7 @@ function updateRainBox(forecastUpdated,conditionsUpdated) {
         let wx = getCurrentWx()
 
         if (wx.hasOwnProperty("rainratein") == true) {
-            document.querySelector('#rainratein_ex').innerHTML = parseFloat(wx.rainratein).toFixed(2);
+            document.querySelector('#rainratein_ex').innerHTML = parseFloat(wx.rainratein).toFixed(2) + "<span class='rain_units'> in/hr</span>";
 
             document.querySelector('#rain_hr_value_ex').innerHTML = parseFloat(wx.hourlyrainin).toFixed(2) + "<span class='rain_units'> in</span>";
             document.querySelector('#rain_day_value_ex').innerHTML = parseFloat(wx.dailyrainin).toFixed(2) + "<span class='rain_units'> in</span>";

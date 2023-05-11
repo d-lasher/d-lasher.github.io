@@ -8,12 +8,8 @@ function initNowBox() {
 function updateNowBox(forecastUpdated,conditionsUpdated) {
     let wx = getCurrentWx()
     if (conditionsUpdated == true) {
-        if (wx != null) {
-            if (wx.hasOwnProperty('temp1f'))
-                document.querySelector('#temp1f').innerHTML = parseInt(wx.temp1f) + "&#176;";
-            else if (wx.hasOwnProperty('tempf'))
-                document.querySelector('#temp1f').innerHTML = parseInt(wx.tempf) + "&#176;";
-        }
+        if (wx != null) 
+            document.querySelector('#temp1f').innerHTML = getOutsideTemp(wx) + "&#176;";
     }
     document.querySelector('#background_location').innerHTML = selectedStationJSON.label;
 
