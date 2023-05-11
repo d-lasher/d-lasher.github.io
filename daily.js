@@ -97,6 +97,11 @@ function updateMoreDailyBox() {
                 precipt = "Flurries"
             else  
                 precipt = snow_amnt.toFixed(1) + '" Snow'
+        } else {
+            rain_pop = 5.0 * Math.round( dailyWX['pop'] / 5.0 )
+            if (dailyWX['pop'] > 33) {
+                precipt = rain_pop.toFixed(0) + '% Rain'
+            }
         }
         template = template.replace("{$precp}",precipt)
 

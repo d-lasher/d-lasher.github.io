@@ -20,7 +20,7 @@
     top:30px;
     left:30px;
     width:90%;
-    height:60px;
+    height:90px;
     color: rgb(236, 243, 243);
     font-size: 30px; 
     font-weight: 600;
@@ -29,7 +29,7 @@
 
   #storm_value {
     position: absolute;
-    top:100px;
+    top:120px;
     left:100px;
     width:60%;
     height:60px;

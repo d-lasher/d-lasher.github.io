@@ -24,6 +24,16 @@ function updateRainBox(forecastUpdated,conditionsUpdated) {
     }
 
     if (forecastUpdated == true) {
+        let now = Date.now()
+        let dailyWX = getDailyWx(now,0)
+
+        if (dailyWX['rain_amt'] > 0.0) {
+            rain_amnt = MMtoIN( dailyWX['rain_amt'] )
+            document.querySelector('#rain_next').innerHTML =  rain_amnt + '" more rain today.';
+        } else {
+            rain_amnt = MMtoIN( dailyWX['rain_amt'] )
+            document.querySelector('#rain_next').innerHTML =  'No rain expected today.';
+        }
     }
     return
 }

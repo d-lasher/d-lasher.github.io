@@ -20,31 +20,32 @@ function updateStormBox(forecastUpdated,conditionsUpdated) {
         let percip_next = "No storms expected in the near future."
 
         if (wx != null) {   
-            forecast = getSnowForecast()
+            let forecast = getForecast()
             if (forecast.length > 0) {
-                for (idx=0; idx<1; idx++) {
-                    description = "Snow expected " + forecast[idx]['time_frame']
-                    total_precip = MMtoIN( forecast[idx]['snowfall'] ).toFixed(1) + '"'
+                let idx = 0
 
-                    if (forecast[idx]['ending'] != null)
-                        description = description + ", ending " + forecast[idx]['ending'] + '.'
+                description = forecast[idx]['type'] + " expected " + forecast[idx]['time_frame']
+                total_precip = MMtoIN( forecast[idx]['amnt'] ).toFixed(1) + '"'
 
-                    if (idx == forecast.length - 1) {
-                        let after = forecast[idx]['time_frame']
-                        if (forecast[idx]['ending'] != null) 
-                            after = forecast[idx]['ending']
-                        percip_next = "No storms forecasted after "+after+"."
-                    } else {
-                        next_precip = MMtoIN( forecast[idx+1]['snowfall'] ).toFixed(1) + ' inch '
-                        next_timeframe = forecast[idx+1]['time_frame']
-                        percip_next = next_precip + " of snow expected "+next_timeframe
+                if (forecast[idx]['ending'] != null)
+                    description = description + ", ending " + forecast[idx]['ending'] + '.'
 
-                        if (forecast[idx+1]['ending'] != null)
-                            percip_next = percip_next + " into " + forecast[idx+1]['ending'] + '.'
-                        else
-                            percip_next = percip_next + '.'
-                    }
+                if (idx == forecast.length - 1) {
+                    let after = forecast[idx]['time_frame']
+                    if (forecast[idx]['ending'] != null) 
+                        after = forecast[idx]['ending']
+                    percip_next = "No storms forecasted after "+after+"."
+                } else {
+                    let next_precip = MMtoIN( forecast[idx+1]['amnt'] ).toFixed(1) + ' inch '
+                    let next_timeframe = forecast[idx+1]['time_frame']
+                    percip_next = next_precip + " of " + forecast[idx+1]['type'].toLowerCase() + " expected "+next_timeframe
+
+                    if (forecast[idx+1]['ending'] != null)
+                        percip_next = percip_next + " into " + forecast[idx+1]['ending'] + '.'
+                    else
+                        percip_next = percip_next + '.'
                 }
+
             }
         }
 
@@ -89,6 +90,67 @@ function getSnowForecast() {
             }
         }
         
+        min = max
+        max += (24 * 60 * 60) * 1000
+    }
+    
+    return expectations
+}
+
+function getForecast() {
+    let now = Date.now()
+    const d = new Date();               //  start looking for snow tommorow at 6:00AM
+    let max = GetMidnight()
+    let min = max - (24 * 60 * 60 * 1000)
+
+    let expectations = []
+    let prev = null
+
+    for (i=0; i<7; i += 1) {
+        snowfall =  sumHourlyData(min,max,"snowfallAmount")
+        rain =  sumHourlyData(min,max,"quantitativePrecipitation")
+        pop =  maxHourlyData(min,max,"probabilityOfPrecipitation")
+
+        if (snowfall > 0) {
+            slug = "Snow Forecast"
+
+            dow = new Date(min).getDay()
+            time_frame = GetDayOfWeek(dow)
+            if (i == 0) 
+                time_frame = 'Today'
+
+//  If the storm carries over from the day before, just update the ending time
+            if ((prev != null) && (prev['type'] == 'Snow')) {
+                prev['ending'] = time_frame
+                prev['amnt'] += snowfall
+            }
+            if (prev == null) {
+                result = {'type':'Snow', 'amnt':snowfall, 'slug':slug, 'time_frame':time_frame, 'day':i, 'ending':null}
+                expectations.push(result)
+                prev = result
+            }
+        }
+        
+        if ((rain > 0.05) && (pop > 33)) {
+            slug = "Rain Forecast"
+
+            dow = new Date(min).getDay()
+            time_frame = GetDayOfWeek(dow)
+            if (i == 0) 
+                time_frame = 'Today'
+
+//  If the storm carries over from the day before, just update the ending time
+            if ((prev != null) && (prev['type'] == 'Rain')) {
+                prev['ending'] = time_frame
+                prev['amnt'] += rain
+            }
+            if (prev == null) {
+                result = {'type':'Rain', 'amnt':rain, 'slug':slug, 'time_frame':time_frame, 'day':i, 'ending':null}
+                expectations.push(result)
+                prev = result
+            }
+        }
+
         min = max
         max += (24 * 60 * 60) * 1000
     }

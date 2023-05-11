@@ -76,6 +76,7 @@ function updateMoreHourlyBox() {
 
         total_snow_amnt += MMtoIN( hourlyWX['snow_amnt'] )
         total_rain_amnt += MMtoIN( hourlyWX['rain_amnt'] )
+        chance_of_precp = hourlyWX['pop']
 
         let precp_type = hourlyWX['precp_type'] 
 
@@ -88,7 +89,8 @@ function updateMoreHourlyBox() {
             template = template.replace("{$precp_type}",precp_type)
         } else if (precp_type == 'Rain') {
             precp_amnt = MMtoIN( total_rain_amnt ).toFixed(1)
-            template = template.replace("{$precp_amount}",total_rain_amnt.toFixed(1))
+            precp_chance = parseInt( 5.0 * Math.round(chance_of_precp / 5.0) ) + '%'
+            template = template.replace("{$precp_amount}",precp_chance)
             template = template.replace("{$precp_type}",precp_type)
         } else {
             template = template.replace("{$precp_amount}",'')

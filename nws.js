@@ -224,11 +224,24 @@ function getWxLabel(uts,currentWx) {
     if (pot > 50) {
         return 'Thunderstorms'
     }
-    if ((pop > 33) && (temp > 36)){
-        if (windGust > 31) 
-           return 'Stormy'
-        return 'Rain'
+
+    if (currentWx.hasOwnProperty("rainratein")) {
+//  We have a rain gauge
+        if (parseFloat(currentWx.rainratein) > 0) {
+    //  The rain gauge is picking up rain...
+            if (windGust > 31) 
+                return 'Stormy'
+            return 'Rain'
+        }
+    } else {
+ //  We don't have a rain gauge      
+        if ((pop > 33) && (temp > 36)){
+            if (windGust > 31) 
+                return 'Stormy'
+            return 'Rain'
+        }
     }
+
     if (visibility < 1600)
         return 'Foggy'
     if (windGust > 48.27)   // 48.27km = 30mph
@@ -269,6 +282,7 @@ function getWxIcon(uts_min,uts_max,force_daylight) {
             return 'lightningmoon.png'
         return 'lightning.png'
     }
+
     if ((pop > 33) && (temp > 2)){
         if (windGust > 31) 
             return 'windrain.png'
@@ -308,6 +322,8 @@ function getDailyWx(now,deltaDay) {
         minTempTime = prev_midnight
 
     let snowfall_amt = sumHourlyData(prev_midnight,next_midnight,'snowfallAmount')
+    let rain_amt = sumHourlyData(prev_midnight,next_midnight,'quantitativePrecipitation')
+    let pop = maxHourlyData(prev_midnight,next_midnight,'probabilityOfPrecipitation')
     let windgusts = maxHourlyData(prev_midnight,next_midnight,'windGust')
     let wind_uom = getUnits('windGust')
 
@@ -317,7 +333,7 @@ function getDailyWx(now,deltaDay) {
 
     let icon = getWxIcon(prev_midnight,next_midnight,true)
 
-    let wx = {'slug':slug, 'icon':icon, 'temp_uom':temp_uom, 'maxtemp':maxtemp, 'mintemp':mintemp, 'wind_uom':wind_uom, 'windgusts':windgusts, 'snowfall_amt':snowfall_amt}
+    let wx = {'slug':slug, 'icon':icon, 'temp_uom':temp_uom, 'maxtemp':maxtemp, 'mintemp':mintemp, 'wind_uom':wind_uom, 'windgusts':windgusts, 'pop':pop, 'rain_amt': rain_amt, 'snowfall_amt':snowfall_amt}
     return wx
 }
 
