@@ -6,7 +6,6 @@ function initRainBox() {
 
 
 function updateRainBox(forecastUpdated,conditionsUpdated) {
-    return
 
     if (conditionsUpdated == true) {
         let wx = getCurrentWx()
