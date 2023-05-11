@@ -77,7 +77,7 @@ function getForecast() {
             dow = new Date(min).getDay()
             time_frame = GetDayOfWeek(dow)
             if (i == 0) 
-                time_frame = 'Today'
+                time_frame = 'today'
 
 //  If the storm carries over from the day before, just update the ending time
             if ((prev != null) && (prev['type'] == 'Snow')) {
@@ -97,7 +97,7 @@ function getForecast() {
             dow = new Date(min).getDay()
             time_frame = GetDayOfWeek(dow)
             if (i == 0) 
-                time_frame = 'Today'
+                time_frame = 'today'
 
 //  If the storm carries over from the day before, just update the ending time
             if ((prev != null) && (prev['type'] == 'Rain')) {
