@@ -231,6 +231,8 @@ function getWxLabel(uts,currentWx) {
     //  The rain gauge is picking up rain...
             if (windGust > 31) 
                 return 'Wind and Rain'
+            if (parseFloat(currentWx.rainratein) > 0.25)
+                return 'Heavy Rain'
             return 'Raining'
         }
     } else {
