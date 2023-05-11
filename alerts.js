@@ -28,6 +28,7 @@ function updateAlertsBox(forecastUpdated,conditionsUpdated) {
         box.style.display = 'block'
         alertsMoreBoxHidden = new Array(alerts.length)
 
+        let cnt = 0
         for (let idx=0; idx<alerts.length; idx++) {
             let alert = alerts[idx]['properties']
             let template = getAlertTemplate()
@@ -57,7 +58,11 @@ function updateAlertsBox(forecastUpdated,conditionsUpdated) {
             divTable.appendChild(ele); 
             
             alertsMoreBoxHidden[idx] = true
+            cnt += 1
         }
+
+        if (cnt == 0)                   //  Nothing to show, all alerts have expired.
+            box.style.display = 'none'
     }
 
     return

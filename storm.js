@@ -57,46 +57,6 @@ function updateStormBox(forecastUpdated,conditionsUpdated) {
     return
 }
 
-function getSnowForecast() {
-    let now = Date.now()
-    const d = new Date();               //  start looking for snow tommorow at 6:00AM
-    let max = GetMidnight()
-    let min = max - (24 * 60 * 60 * 1000)
-
-    let expectations = []
-    let prev = null
-
-    for (i=0; i<7; i += 1) {
-        snowfall =  sumHourlyData(min,max,"snowfallAmount")
-        if (snowfall == 0) {
-            prev = null
-        } else {
-            slug = "Snow Forecast"
-
-            dow = new Date(min).getDay()
-            time_frame = GetDayOfWeek(dow)
-            if (i == 0) 
-                time_frame = 'Today'
-
-//  If the storm carries over from the day before, just update the ending time
-            if (prev != null) {
-                prev['ending'] = time_frame
-                prev['snowfall'] += snowfall
-            }
-            if (prev == null) {
-                result = {'snowfall':snowfall, 'slug':slug, 'time_frame':time_frame, 'day':i, 'ending':null}
-                expectations.push(result)
-                prev = result
-            }
-        }
-        
-        min = max
-        max += (24 * 60 * 60) * 1000
-    }
-    
-    return expectations
-}
-
 function getForecast() {
     let now = Date.now()
     const d = new Date();               //  start looking for snow tommorow at 6:00AM

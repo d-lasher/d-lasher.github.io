@@ -29,7 +29,7 @@ function updateRainBox(forecastUpdated,conditionsUpdated) {
 
         if (dailyWX['rain_amt'] > 0.0) {
             rain_amnt = MMtoIN( dailyWX['rain_amt'] )
-            document.querySelector('#rain_next').innerHTML =  rain_amnt + '" more rain today.';
+            document.querySelector('#rain_next').innerHTML =  parseFloat(rain_amnt).toFixed(2) + '" more rain today.';
         } else {
             rain_amnt = MMtoIN( dailyWX['rain_amt'] )
             document.querySelector('#rain_next').innerHTML =  'No rain expected today.';

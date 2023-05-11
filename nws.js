@@ -191,12 +191,12 @@ function maxHourlyData(min,max,property) {
 }
 
 function getHourlyData(uts,property) {
-    properties = jsonGridData["properties"]
-    dataset = properties[property]["values"]
+    let properties = jsonGridData["properties"]
+    let dataset = properties[property]["values"]
 
-    value = NaN
+    let value = NaN
     for (let idx=0; idx<dataset.length; idx++) {
-        valid_time = nwsTimeToUTS(dataset[idx]['validTime'])
+        let valid_time = nwsTimeToUTS(dataset[idx]['validTime'])
         if (valid_time > uts)
             break
         value = dataset[idx]["value"]
@@ -230,8 +230,8 @@ function getWxLabel(uts,currentWx) {
         if (parseFloat(currentWx.rainratein) > 0) {
     //  The rain gauge is picking up rain...
             if (windGust > 31) 
-                return 'Stormy'
-            return 'Rain'
+                return 'Wind and Rain'
+            return 'Raining'
         }
     } else {
  //  We don't have a rain gauge      
