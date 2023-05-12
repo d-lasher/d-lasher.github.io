@@ -61,7 +61,7 @@ function getForecast() {
     let now = Date.now()
     const d = new Date();               //  start looking for snow tommorow at 6:00AM
     let max = GetMidnight()
-    let min = max - (24 * 60 * 60 * 1000)
+    let min = now
 
     let expectations = []
     let prev = null
@@ -79,8 +79,11 @@ function getForecast() {
             if (i == 0) 
                 time_frame = 'today'
 
+            if ((prev != null) && (prev['type'] != 'Snow'))
+                prev = null
+
 //  If the storm carries over from the day before, just update the ending time
-            if ((prev != null) && (prev['type'] == 'Snow')) {
+            if (prev != null) {
                 prev['ending'] = time_frame
                 prev['amnt'] += snowfall
             }
@@ -91,7 +94,7 @@ function getForecast() {
             }
         }
         
-        if ((rain > 0.05) && (pop > 33)) {
+        else if ((rain > 0.05) && (pop > 33)) {
             slug = "Rain Forecast"
 
             dow = new Date(min).getDay()
@@ -99,8 +102,11 @@ function getForecast() {
             if (i == 0) 
                 time_frame = 'today'
 
+            if ((prev != null) && (prev['type'] != 'Rain'))
+                prev = null
+
 //  If the storm carries over from the day before, just update the ending time
-            if ((prev != null) && (prev['type'] == 'Rain')) {
+            if (prev != null) {
                 prev['ending'] = time_frame
                 prev['amnt'] += rain
             }

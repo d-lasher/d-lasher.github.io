@@ -229,7 +229,7 @@ function getWxLabel(uts,currentWx) {
 //  We have a rain gauge
         if (parseFloat(currentWx.rainratein) > 0) {
 //  The rain gauge is picking up rain...
-            if ((temp > 31) && (temp < 36)) 
+            if ((temp >= 32) && (temp < 35)) 
                 return 'Snow and Rain'
             if (windGust > 31) 
                 return 'Wind and Rain'
@@ -237,20 +237,22 @@ function getWxLabel(uts,currentWx) {
                 return 'Heavy Rain'
             return 'Raining'
         }
-    } 
-
+    } else {
  //  We don't have a rain gauge      
-    if (pop > 33)  {
-        if (temp > 36) {
-            if (windGust > 31) 
-                return 'Stormy'
-            return 'Rain'
+        if (pop > 33)  {
+            if (temp > 36) {
+                if (windGust > 31) 
+                    return 'Stormy'
+                return 'Rain'
+            }
+            if ((temp > 31) && (temp < 35))
+                return 'Rain and Snow'
+            else
+                return 'Chance of Snow'
         }
-        if (temp > 31)
-            return 'Rain and Snow'
-        else
-            return 'Chance of Snow'
     }
+
+
 
     if (visibility < 1600)
         return 'Foggy'
@@ -326,6 +328,9 @@ function getDailyWx(now,deltaDay) {
     let next_midnight = GetMidnight() + (deltaDay * 24.0 * 60.0 * 60.0 * 1000.0)
     let uts = now + (deltaDay * 24.0 * 60.0 * 60.0 * 1000.0)
     let slug = getDailySlug(uts)
+    
+    if (deltaDay == 0)
+        prev_midnight = now
 
     let minTempTime = next_midnight
     if (d.getHours() <= 7)
