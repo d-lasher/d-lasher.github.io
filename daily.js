@@ -77,7 +77,8 @@ function updateMoreDailyBox() {
         let template = getMoreDailyTemplate()
         template = template.replace("{$day}",dailyWX['slug'])
 
-        let hitemp = CtoF(dailyWX['maxtemp']) + '&#176;' 
+        maxtempF = CtoF(dailyWX['maxtemp'])
+        let hitemp = maxtempF + '&#176;' 
         template = template.replace("{$maxtemp}",hitemp)
 
         let lowtemp = CtoF(dailyWX['mintemp']) + '&#176;' 
@@ -100,7 +101,10 @@ function updateMoreDailyBox() {
         } else {
             rain_pop = 5.0 * Math.round( dailyWX['pop'] / 5.0 )
             if (dailyWX['pop'] > 33) {
-                precipt = rain_pop.toFixed(0) + '% Rain'
+                if (maxtempF <= 36) 
+                    precipt = 'Flurries'
+                else 
+                    precipt = rain_pop.toFixed(0) + '% Rain'
             }
         }
         template = template.replace("{$precp}",precipt)
