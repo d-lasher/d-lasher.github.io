@@ -12,6 +12,20 @@
     height: 440px; 
 }
 
+#gauge_table_parent {
+    position: absolute;
+    overflow-x: scroll;
+    overflow-y: hidden;  
+
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+
+    top:70px;
+    left:75px;
+    width:275px;
+    height: 300px;
+}
+
 #gauge_table_child {
     position: relative;
     float: left;
