@@ -1,0 +1,35 @@
+
+#gauges_box {
+    position: relative;
+    float:left;
+    border-radius: 25px;
+    background-color: rgb(53, 114, 172);
+    margin-top:0px;
+    margin-bottom:10px;
+    margin-left:10px;
+    margin-right:10px;
+    width: 440px;
+    height: 440px; 
+}
+
+.gauge_label_ex {
+    position: absolute;
+    top: 90px;
+    left: 0px;
+    width: 150%;
+    height: 30px;
+    font-size: 30px;
+    font-weight: 500;
+    text-align: left;
+}
+
+.gauge_value_ex {
+    position: absolute;
+    top: 20px;
+    left: 0px;
+    width: 100%;
+    height: 60px;
+    text-align: left;
+}
+
+  

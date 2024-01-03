@@ -51,6 +51,7 @@
         <link rel="stylesheet" href="rain.css">
         <link rel="stylesheet" href="nws_box.css">
         <link rel="stylesheet" href="messages.css">
+        <link rel="stylesheet" href="gauges.css">
 
         <script src="config.js"></script>
         <script src="aws.js"></script>
@@ -68,6 +69,7 @@
         <script src="storm.js"></script>
         <script src="alerts.js"></script>
         <script src="rain.js"></script>
+        <script src="gauges.js"></script>
         <script src="nws_box.js"></script>
 
         <script src="main.js"></script>
@@ -191,6 +193,20 @@
             <span class="conditions_label">Inside</span>
             <p id="inside_temp"><span id="tempinf"></span></p>
             <p id="inside_humidity">The humidity inside is <span id="humidityin"></span>%.</p>
+        </div>
+
+        <div id='gauges_box' style="display:none">
+            <span id='gauges_label' class="conditions_label">Gauges</span>
+            <div id="rain_table_parent" class="hide_scrollbar">
+                <div id="rain_table_child">
+                    <div id='gauge1' class="rain_item" style="display:none"><span id="gauge1_value" class="gauge_value_ex"></span><span id="gauge1_label" class="gauge_label_ex"></span></div>
+                    <div id='gauge2' class="rain_item" style="display:none"><span id="gauge2_value" class="gauge_value_ex"></span><span id="gauge2_label" class="gauge_label_ex"></span></div>
+                    <div id='gauge3' class="rain_item" style="display:none"><span id="gauge3_value" class="gauge_value_ex"></span><span id="gauge3_label" class="gauge_label_ex"></span></div>
+                    <div id='gauge4' class="rain_item" style="display:none"><span id="gauge4_value" class="gauge_value_ex"></span><span id="gauge4_label" class="gauge_label_ex"></span></div>
+                    <div id='gauge5' class="rain_item" style="display:none"><span id="gauge5_value" class="gauge_value_ex"></span><span id="gauge5_label" class="gauge_label_ex"></span></div>
+                    <div id='gauge6' class="rain_item" style="display:none"><span id="gauge6_value" class="gauge_value_ex"></span><span id="gauge6_label" class="gauge_label_ex"></span></div>
+                </div>
+            </div>
         </div>
 
         <div id='sun_box'>

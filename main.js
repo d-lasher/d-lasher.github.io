@@ -59,6 +59,7 @@ async function loadStationWx() {
     initStormBox()
     initAlertsBox()
     initRainBox()
+    initGaugesBox()
     return
 }
 
@@ -96,6 +97,7 @@ async function updateCurrentWx() {
         updateStormBox(false,true) 
         updateAlertsBox(false,true)
         updateRainBox(false,true)
+        updateGaugesBox(false,true)
     }
     catch {
         console.log("updateCurrentWx error")
@@ -202,10 +204,10 @@ function getWidth() {
 }
 
 function getOutsideTemp(wx) {
-    if (wx.hasOwnProperty('temp1f'))
-        return parseInt(wx.temp1f);
-    else if (wx.hasOwnProperty('tempf'))
+    if (wx.hasOwnProperty('tempf'))
         return parseInt(wx.tempf);
+    else (wx.hasOwnProperty('temp1f'))
+        return parseInt(wx.temp1f);
 
     return '---'
 }
